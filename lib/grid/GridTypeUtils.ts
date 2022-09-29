@@ -8,8 +8,8 @@ export class GridTypeUtils {
      * 
      * @return accuracy digits
      */
-    public getAccuracy(): number {
-        return Math.max(ordinal() - 1, 0);
+    public static getAccuracy(gridType: GridType): number {
+        return Math.max(gridType.ordinal() - 1, 0);
     }
 
     /**

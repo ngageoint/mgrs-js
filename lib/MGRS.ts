@@ -229,7 +229,7 @@ export class MGRS {
      */
     public getEastingAndNorthing(type: GridType): string {
 
-        const accuracy = 5 - (int) Math.log10(type);
+        const accuracy = 5 - ~~Math.log10(type);
 
         const easting = sprintf.sprintf(Locale.getDefault(), "%05d",
             this.easting);
@@ -423,8 +423,8 @@ export class MGRS {
         const rowLetter = MGRS.getRowLetterFromUTM(utm);
 
         // truncate easting/northing to within 100km grid square
-        const easting = (long)(utm.getEasting() % 100000);
-        const northing = (long)(utm.getNorthing() % 100000);
+        const easting = (utm.getEasting() % 100000);
+        const northing = (utm.getNorthing() % 100000);
 
         return MGRS.create(utm.getZone(), bandLetter, easting, northing, columnLetter, rowLetter);
     }
@@ -654,7 +654,7 @@ export class MGRS {
      *             upon failure to parse the MGRS string
      */
     public static accuracy(mgrs: string): number {
-        return MGRS.precision(mgrs).getAccuracy();
+        return GridTypeUtils.getAccuracy(MGRS.precision(mgrs));
     }
 
     /**
@@ -702,7 +702,7 @@ export class MGRS {
     public static getColumnLetter(zoneNumber: number, easting: number): string {
         // columns in zone 1 are A-H, zone 2 J-R, zone 3 S-Z, then repeating
         // every 3rd zone
-        const column = (int) Math.floor(easting / 100000);
+        const column = ~~Math.floor(easting / 100000);
         const columnLetters = MGRS.getColumnLetters(zoneNumber);
         return columnLetters.charAt(column - 1);
     }
@@ -729,7 +729,7 @@ export class MGRS {
      */
     public static getRowLetter(zoneNumber: number, northing: number): string {
         // rows in even zones are A-V, in odd zones are F-E
-        const row = (int) Math.floor(northing / 100000) % 20;
+        const row = ~~Math.floor(northing / 100000) % 20;
         const rowLetters = MGRS.getRowLetters(zoneNumber);
         return rowLetters.charAt(row);
     }
