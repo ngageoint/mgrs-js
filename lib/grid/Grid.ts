@@ -79,13 +79,13 @@ export class Grid extends BaseGrid {
      * @return grid type line style
      */
     public getStyleFromGridType(gridType: GridType): GridStyle {
-        let style: GridStyle;
+        let style: GridStyle | undefined;
         if (gridType === this.type) {
             style = this.getStyle();
         } else {
             style = this.styles.get(gridType);
         }
-        return style;
+        return style!;
     }
 
     /**
@@ -98,7 +98,7 @@ export class Grid extends BaseGrid {
     private getOrCreateStyle(gridType: GridType): GridStyle {
         let style = this.getStyleFromGridType(gridType);
         if (!style) {
-            style = new GridStyle(null, 0);
+            style = new GridStyle(undefined, 0);
             this.setStyleWithGridType(gridType, style);
         }
         return style;
@@ -121,7 +121,7 @@ export class Grid extends BaseGrid {
         if (gridType === this.type) {
             this.setStyle(style);
         } else {
-            this.styles.set(gridType, style != null ? style : new GridStyle(null, 0));
+            this.styles.set(gridType, style != null ? style : new GridStyle(undefined, 0));
         }
     }
 
@@ -140,7 +140,7 @@ export class Grid extends BaseGrid {
      * @return grid type line color
      */
     public getColorFromGridType(gridType: GridType): Color {
-        let color: Color;
+        let color: Color | undefined;
         let style = this.getStyleFromGridType(gridType);
         if (style) {
             color = style.getColor();
@@ -148,7 +148,7 @@ export class Grid extends BaseGrid {
         if (!color) {
             color = this.getColor();
         }
-        return color;
+        return color!;
     }
 
     /**
@@ -222,7 +222,7 @@ export class Grid extends BaseGrid {
      *            grid zone
      * @return lines
      */
-    public getLinesFromGridTile(tile: GridTile, zone: GridZone): GridLine[] {
+    public getLinesFromGridTile(tile: GridTile, zone: GridZone): GridLine[] | undefined {
         return this.getLines(tile.getZoom(), tile.getBounds(), zone);
     }
 
@@ -237,8 +237,8 @@ export class Grid extends BaseGrid {
      *            grid zone
      * @return lines
      */
-    public getLines(zoom: number, tileBounds: Bounds, zone: GridZone): GridLine[] {
-        let lines: GridLine[];
+    public getLines(zoom: number, tileBounds: Bounds, zone: GridZone): GridLine[] | undefined {
+        let lines: GridLine[] | undefined;
         if (this.isLinesWithin(zoom)) {
             lines = this.getLinesFromBounds(tileBounds, zone);
         }
@@ -267,7 +267,7 @@ export class Grid extends BaseGrid {
      *            grid zone
      * @return labels
      */
-    public getLabelsFromGridTile(tile: GridTile, zone: GridZone): GridLabel[] {
+    public getLabelsFromGridTile(tile: GridTile, zone: GridZone): GridLabel[] | undefined {
         return this.getLabels(tile.getZoom(), tile.getBounds(), zone);
     }
 
@@ -283,8 +283,8 @@ export class Grid extends BaseGrid {
      * @return labels
      */
     public getLabels(zoom: number, tileBounds: Bounds,
-        zone: GridZone): GridLabel[] {
-        let labels: GridLabel[];
+        zone: GridZone): GridLabel[] | undefined {
+        let labels: GridLabel[] | undefined;
         if (this.isLabelerWithin(zoom)) {
             labels = this.getLabeler().getLabels(tileBounds, this.type, zone);
         }

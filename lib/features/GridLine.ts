@@ -40,7 +40,7 @@ export class GridLine extends Line {
      *            line grid type (optional)
      * @return line
      */
-    public static lineFromLine(line: Line, gridType: GridType): GridLine {
+    public static lineFromLine(line: Line, gridType?: GridType): GridLine {
         const gridLine = new GridLine(line);
         gridLine.gridType = gridType;
         return gridLine;
@@ -72,7 +72,7 @@ export class GridLine extends Line {
      * 
      * @return grid type
      */
-    public getGridType(): GridType {
+    public getGridType(): GridType | undefined {
         return this.gridType;
     }
 

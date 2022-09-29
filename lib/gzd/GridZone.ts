@@ -116,7 +116,9 @@ export class GridZone {
      * @return true if within bounds
      */
     public isWithin(bounds: Bounds): boolean {
-        bounds = bounds.toUnit(this.bounds.getUnit());
+        if(this.bounds.getUnit()) {
+            bounds = bounds.toUnit(this.bounds.getUnit()!);
+        }
         return this.bounds.getSouth() <= bounds.getNorth()
             && this.bounds.getNorth() >= bounds.getSouth()
             && this.bounds.getWest() <= bounds.getEast()
@@ -140,7 +142,7 @@ export class GridZone {
      *            grid type
      * @return lines
      */
-    public getLinesFromGridType(gridType: GridType): GridLine[] {
+    public getLinesFromGridType(gridType: GridType): GridLine[] | undefined {
         return this.getLines(this.bounds, gridType);
     }
 
@@ -153,9 +155,9 @@ export class GridZone {
      *            grid type
      * @return lines
      */
-    public getLines(tileBounds: Bounds, gridType: GridType): GridLine[] {
+    public getLines(tileBounds: Bounds, gridType: GridType): GridLine[] | undefined {
 
-        let lines: GridLine[];
+        let lines: GridLine[] | undefined;
 
         if (gridType === GridType.GZD) {
             // if precision is 0, draw the zone bounds
@@ -325,11 +327,11 @@ export class GridZone {
      *            grid type
      * @return draw bounds or null
      */
-    public getDrawBounds(tileBounds: Bounds, gridType: GridType): Bounds {
+    public getDrawBounds(tileBounds: Bounds, gridType: GridType): Bounds | undefined {
 
-        let drawBounds: Bounds;
+        let drawBounds: Bounds | undefined;
 
-        tileBounds = tileBounds.toDegrees().overlap(this.bounds);
+        tileBounds = tileBounds.toDegrees().overlap(this.bounds) as Bounds;
 
         if (tileBounds && !tileBounds.isEmpty()) {
 

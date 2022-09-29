@@ -36,7 +36,7 @@ export class GridZones {
 
         // Create longitudinal strips
         const numberRange = new ZoneNumberRange();
-        for (const zoneNumber of this.numberRange) {
+        for (const zoneNumber of numberRange) {
             const longitude = MGRSConstants.MIN_LON
                 + ((zoneNumber - 1) * MGRSConstants.ZONE_WIDTH);
             const strip = new LongitudinalStrip(zoneNumber,
@@ -70,7 +70,7 @@ export class GridZones {
                 let gridZoneStrip = strip;
 
                 if (this.isSvalbard(zoneNumber, bandLetter)) {
-                    gridZoneStrip = this.getSvalbardStrip(strip);
+                    gridZoneStrip = this.getSvalbardStrip(strip)!;
                 } else if (this.isNorway(zoneNumber, bandLetter)) {
                     gridZoneStrip = this.getNorwayStrip(strip);
                 }
@@ -95,7 +95,7 @@ export class GridZones {
      */
     public static getLongitudinalStrip(zoneNumber: number): LongitudinalStrip {
         MGRSUtils.validateZoneNumber(zoneNumber);
-        return this.strips.get(zoneNumber);
+        return this.strips.get(zoneNumber)!;
     }
 
     /**
@@ -129,7 +129,7 @@ export class GridZones {
      */
     public static getLatitudeBand(bandLetter: string): LatitudeBand {
         MGRSUtils.validateBandLetter(bandLetter);
-        return this.bands.get(bandLetter);
+        return this.bands.get(bandLetter)!;
     }
 
     /**
@@ -185,7 +185,7 @@ export class GridZones {
     public static getGridZone(zoneNumber: number, bandLetter: string): GridZone {
         MGRSUtils.validateZoneNumber(zoneNumber);
         MGRSUtils.validateBandLetter(bandLetter);
-        return this.gridZones.get(zoneNumber).get(bandLetter);
+        return this.gridZones.get(zoneNumber)!.get(bandLetter)!;
     }
 
     /**
@@ -426,9 +426,9 @@ export class GridZones {
      *            longitudinal strip
      * @return Svalbard strip or null for empty strips
      */
-    private static getSvalbardStrip(strip: LongitudinalStrip): LongitudinalStrip {
+    private static getSvalbardStrip(strip: LongitudinalStrip): LongitudinalStrip | undefined {
 
-        let svalbardStrip: LongitudinalStrip;
+        let svalbardStrip: LongitudinalStrip | undefined;
 
         const number = strip.getNumber();
         if (number % 2 === 1) {

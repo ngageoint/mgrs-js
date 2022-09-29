@@ -40,7 +40,8 @@ export class LatitudeBand {
      *            northern latitude
      */
     constructor(letter: string, south: number, north: number) {
-        this.setLetter(letter);
+        this.letter = letter;
+        this.hemisphere = MGRSUtils.getHemisphere(letter);
         this.south = south;
         this.north = north;
     }

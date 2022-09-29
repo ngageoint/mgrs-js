@@ -451,7 +451,7 @@ export class MGRS {
             throw new Error("Invalid MGRS: " + mgrs);
         }
 
-        let mgrsValue: MGRS = null;
+        let mgrsValue: MGRS | undefined;
 
         let columnRow = matcher.group(3);
         if (columnRow) {
@@ -626,7 +626,7 @@ export class MGRS {
             throw new Error("Invalid MGRS: " + mgrs);
         }
 
-        let precision: GridType = null;
+        let precision: GridType | undefined;
 
         if (matcher.group(3) != null) {
 

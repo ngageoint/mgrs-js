@@ -27,7 +27,7 @@ export abstract class GridLabeler extends Labeler {
             PropertyConstants.BUFFER.toString());
 
     constructor(enabled: boolean, minZoom = 0, maxZoom: number | undefined, color = Color.black(), textSize = GridLabeler.DEFAULT_TEXT_SIZE, buffer = GridLabeler.DEFAULT_BUFFER) {
-        super(enabled, minZoom, maxZoom, color, textSize, buffer);
+        super(enabled, minZoom, maxZoom, color, textSize!, buffer!);
     }
 
     /**
@@ -42,6 +42,6 @@ export abstract class GridLabeler extends Labeler {
      * @return labels
      */
     public abstract getLabels(tileBounds: Bounds,
-        gridType: GridType, zone: GridZone): GridLabel[];
+        gridType: GridType, zone: GridZone): GridLabel[] | undefined;
 
 }

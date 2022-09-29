@@ -57,7 +57,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
                 this.getGrid(type).setEnabled(true);
             }
         } else {
-            this.createGrids(null);
+            this.createGrids(undefined);
         }
 
         this.createZoomGrids();
@@ -68,7 +68,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
      * {@inheritDoc}
      */
     public getDefaultWidth(): number {
-        return Grid.DEFAULT_WIDTH;
+        return Grid.DEFAULT_WIDTH!;
     }
 
     /**
@@ -112,7 +112,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
 
         const propagate = this.properties.getBooleanProperty(false,
             PropertyConstants.GRIDS.toString(), PropertyConstants.PROPAGATE.toString());
-        let styles: Map<GridType, GridStyle>;
+        let styles: Map<GridType, GridStyle> | undefined;
         if (propagate) {
             styles = new Map<GridType, GridStyle>();
         }
@@ -139,7 +139,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
      * @param labeler
      *            grid labeler
      */
-    private createGrid(type: GridType, labeler: GridLabeler, styles: Map<GridType, GridStyle>,
+    private createGrid(type: GridType, labeler: GridLabeler, styles?: Map<GridType, GridStyle>,
         enabled?: boolean): void {
 
         const grid = this.newGrid(type);
@@ -152,7 +152,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
             styles.set(type, GridStyle.style(grid.getColor(), grid.getWidth()));
         }
 
-        this.loadGridStyles(grid, styles, gridKey);
+        this.loadGridStyles(grid, gridKey, styles);
 
         this.gridMap.set(type, grid);
     }
@@ -162,28 +162,27 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
      * 
      * @param grid
      *            grid
-     * @param styles
-     *            propagate grid styles
      * @param gridKey
      *            grid key
+     * @param styles
+     *            propagate grid styles
      */
-    private loadGridStyles(grid: Grid, styles: Map<GridType, GridStyle>,
-        gridKey: string): void {
+    private loadGridStyles(grid: Grid, gridKey: string, styles?: Map<GridType, GridStyle>): void {
         const precision = grid.getPrecision();
         if (precision < GridType.HUNDRED_KILOMETER) {
-            this.loadGridStyle(grid, styles, gridKey, GridType.HUNDRED_KILOMETER);
+            this.loadGridStyle(grid, gridKey, GridType.HUNDRED_KILOMETER, styles);
         }
         if (precision < GridType.TEN_KILOMETER) {
-            this.loadGridStyle(grid, styles, gridKey, GridType.TEN_KILOMETER);
+            this.loadGridStyle(grid, gridKey, GridType.TEN_KILOMETER, styles);
         }
         if (precision < GridType.KILOMETER) {
-            this.loadGridStyle(grid, styles, gridKey, GridType.KILOMETER);
+            this.loadGridStyle(grid, gridKey, GridType.KILOMETER, styles);
         }
         if (precision < GridType.HUNDRED_METER) {
-            this.loadGridStyle(grid, styles, gridKey, GridType.HUNDRED_METER);
+            this.loadGridStyle(grid, gridKey, GridType.HUNDRED_METER, styles);
         }
         if (precision < GridType.TEN_METER) {
-            this.loadGridStyle(grid, styles, gridKey, GridType.TEN_METER);
+            this.loadGridStyle(grid, gridKey, GridType.TEN_METER, styles);
         }
     }
 
@@ -192,15 +191,15 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
      * 
      * @param grid
      *            grid
-     * @param styles
-     *            propagate grid styles
+     * 
      * @param gridKey
      *            grid key
      * @param gridType
      *            style grid type
+     * @param styles
+     *            propagate grid styles
      */
-    private loadGridStyle(grid: Grid, styles: Map<GridType, GridStyle>,
-        gridKey: string, gridType: GridType): void {
+    private loadGridStyle(grid: Grid, gridKey: string, gridType: GridType, styles?: Map<GridType, GridStyle>): void {
 
         const gridKey2 = gridType.name().toLowerCase();
 
@@ -241,7 +240,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
      *            grid type
      * @return grid
      */
-    public getGrid(type: GridType): Grid {
+    public getGrid(type: GridType): Grid | undefined {
         return this.gridMap.get(type);
     }
 
@@ -252,8 +251,13 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
      *            zoom level
      * @return grid type precision
      */
-    public getPrecision(zoom: number): GridType {
-        return this.getGrids(zoom).getPrecision();
+    public getPrecision(zoom: number): GridType | undefined {
+        let precision: GridType | undefined;
+        const zoomGrids = this.getGrids(zoom);
+        if(zoomGrids) {
+            precision = zoomGrids.getPrecision();
+        }
+        return precision;
     }
 
     /**

@@ -25,8 +25,8 @@ export class ZoomGrids extends BaseZoomGrids<Grid> {
 	 * 
 	 * @return grid type precision
 	 */
-	public  getPrecision(): GridType {
-		let type: GridType ;
+	public  getPrecision(): GridType | undefined {
+		let type: GridType | undefined;
 		if (super.hasGrids()) {
 			type = this.grids.begin().value.getType();
 		}

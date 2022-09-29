@@ -22,9 +22,9 @@ export class MGRSLabeler extends GridLabeler {
      * {@inheritDoc}
      */
     public getLabels(tileBounds: Bounds, gridType: GridType,
-        zone: GridZone): GridLabel[] {
+        zone: GridZone): GridLabel[] | undefined {
 
-        let labels: GridLabel[];
+        let labels: GridLabel[] | undefined;
 
         const drawBounds = zone.getDrawBounds(tileBounds, gridType);
 
@@ -67,9 +67,9 @@ export class MGRSLabeler extends GridLabeler {
      * @return labels
      */
     private getLabel(gridType: GridType, zone: GridZone, easting: number,
-        northing: number): GridLabel {
+        northing: number): GridLabel | undefined {
 
-        let label: GridLabel;
+        let label: GridLabel | undefined;
 
         const precision = gridType;
         const bounds = zone.getBounds();
