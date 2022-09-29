@@ -1,0 +1,12 @@
+.github/
+.vscode/
+docs/
+lib/
+test/
+
+*.js.map
+
+.mocharc.js
+.prettierrc
+tsconfig.json
+tslint.json

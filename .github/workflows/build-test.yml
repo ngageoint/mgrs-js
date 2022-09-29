@@ -1,0 +1,34 @@
+name: Build & Test
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v1
+
+    - name: Install
+      run: npm ci
+
+    - name: Build
+      run: npm run build
+
+    - name: Test
+      run: npm run test
+     
+    - name: Lint
+      run: npm run lint
+
+    - name: Coverage
+      run: npm run coverage
+
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      if: github.ref_name == 'master'
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: ./docs/coverage/lcov.info

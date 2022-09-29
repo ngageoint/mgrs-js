@@ -1,0 +1,18 @@
+{
+    "extends": "@tsconfig/recommended/tsconfig.json",
+    "compilerOptions": {
+        "outDir": "./dist",                    /* Redirect output structure to the directory. */
+        "declaration": true,                   /* Generates corresponding '.d.ts' file. */
+        "declarationMap": true,                /* Generates a sourcemap for each corresponding '.d.ts' file. */
+        "sourceMap": true,                     /* Generates corresponding '.map' file. */
+    },
+    "exclude": [    
+          "**/*.d.ts",    
+          "node_modules",
+          "test"
+      ],
+      "include": [
+          "lib",
+          "index.ts"
+      ]
+  }
