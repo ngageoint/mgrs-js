@@ -209,7 +209,7 @@ export class Grid extends BaseGrid {
      * @param labeler
      *            grid labeler
      */
-    protected setLabeler(labeler: GridLabeler): void {
+    public setLabeler(labeler: GridLabeler): void {
         super.setLabeler(labeler);
     }
 
@@ -223,7 +223,7 @@ export class Grid extends BaseGrid {
      * @return lines
      */
     public getLinesFromGridTile(tile: GridTile, zone: GridZone): GridLine[] | undefined {
-        return this.getLines(tile.getZoom(), tile.getBounds(), zone);
+        return this.getLines(tile.getZoom(), zone, tile.getBounds());
     }
 
     /**
@@ -237,9 +237,9 @@ export class Grid extends BaseGrid {
      *            grid zone
      * @return lines
      */
-    public getLines(zoom: number, tileBounds: Bounds, zone: GridZone): GridLine[] | undefined {
+    public getLines(zoom: number,  zone: GridZone, tileBounds?: Bounds): GridLine[] | undefined {
         let lines: GridLine[] | undefined;
-        if (this.isLinesWithin(zoom)) {
+        if (tileBounds && this.isLinesWithin(zoom)) {
             lines = this.getLinesFromBounds(tileBounds, zone);
         }
         return lines;
@@ -254,7 +254,7 @@ export class Grid extends BaseGrid {
      *            grid zone
      * @return lines
      */
-    public getLinesFromBounds(tileBounds: Bounds, zone: GridZone): GridLine[] {
+    public getLinesFromBounds(tileBounds: Bounds, zone: GridZone): GridLine[] | undefined {
         return zone.getLines(tileBounds, this.type);
     }
 
@@ -268,7 +268,7 @@ export class Grid extends BaseGrid {
      * @return labels
      */
     public getLabelsFromGridTile(tile: GridTile, zone: GridZone): GridLabel[] | undefined {
-        return this.getLabels(tile.getZoom(), tile.getBounds(), zone);
+        return this.getLabels(tile.getZoom(), zone, tile.getBounds());
     }
 
     /**
@@ -282,11 +282,11 @@ export class Grid extends BaseGrid {
      *            grid zone
      * @return labels
      */
-    public getLabels(zoom: number, tileBounds: Bounds,
-        zone: GridZone): GridLabel[] | undefined {
+    public getLabels(zoom: number,
+        zone: GridZone, tileBounds?: Bounds): GridLabel[] | undefined {
         let labels: GridLabel[] | undefined;
         if (this.isLabelerWithin(zoom)) {
-            labels = this.getLabeler().getLabels(tileBounds, this.type, zone);
+            labels = this.getLabeler().getLabels(this.type, zone, tileBounds);
         }
         return labels;
     }

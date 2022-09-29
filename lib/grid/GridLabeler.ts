@@ -33,15 +33,14 @@ export abstract class GridLabeler extends Labeler {
     /**
      * Get labels for the bounds
      * 
-     * @param tileBounds
-     *            tile bounds
      * @param gridType
      *            grid type
      * @param zone
      *            grid zone
+     *  * @param tileBounds
+     *            tile bounds
      * @return labels
      */
-    public abstract getLabels(tileBounds: Bounds,
-        gridType: GridType, zone: GridZone): GridLabel[] | undefined;
+    public abstract getLabels(gridType: GridType, zone: GridZone, tileBounds?: Bounds): GridLabel[] | undefined;
 
 }

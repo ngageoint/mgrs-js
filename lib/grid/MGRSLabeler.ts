@@ -21,35 +21,36 @@ export class MGRSLabeler extends GridLabeler {
     /**
      * {@inheritDoc}
      */
-    public getLabels(tileBounds: Bounds, gridType: GridType,
-        zone: GridZone): GridLabel[] | undefined {
+    public getLabels(gridType: GridType, zone: GridZone, tileBounds?: Bounds): GridLabel[] | undefined {
 
         let labels: GridLabel[] | undefined;
 
-        const drawBounds = zone.getDrawBounds(tileBounds, gridType);
+        if (tileBounds) {
+            const drawBounds = zone.getDrawBounds(tileBounds, gridType);
 
-        if (drawBounds) {
+            if (drawBounds) {
 
-            labels = [];
+                labels = [];
 
-            const precision = gridType;
+                const precision = gridType;
 
-            for (let easting = drawBounds
-                .getMinLongitude(); easting <= drawBounds
-                    .getMaxLongitude(); easting += precision) {
-                for (let northing = drawBounds
-                    .getMinLatitude(); northing <= drawBounds
-                        .getMaxLatitude(); northing += precision) {
+                for (let easting = drawBounds
+                    .getMinLongitude(); easting <= drawBounds
+                        .getMaxLongitude(); easting += precision) {
+                    for (let northing = drawBounds
+                        .getMinLatitude(); northing <= drawBounds
+                            .getMaxLatitude(); northing += precision) {
 
-                    const label = this.getLabel(gridType, zone, easting,
-                        northing);
-                    if (label) {
-                        labels.push(label);
+                        const label = this.getLabel(gridType, zone, easting,
+                            northing);
+                        if (label) {
+                            labels.push(label);
+                        }
+
                     }
-
                 }
-            }
 
+            }
         }
 
         return labels;

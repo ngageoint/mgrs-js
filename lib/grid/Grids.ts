@@ -54,7 +54,10 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
         if (types) {
             this.createGrids(false);
             for (const type of types) {
-                this.getGrid(type).setEnabled(true);
+                let grid = this.getGrid(type);
+                if (grid) {
+                    grid.setEnabled(true);
+                }
             }
         } else {
             this.createGrids(undefined);
@@ -144,7 +147,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
 
         const grid = this.newGrid(type);
 
-        const gridKey = type.name().toLowerCase();
+        const gridKey = GridType[type].toLowerCase();
 
         this.loadGrid(grid, gridKey, labeler, enabled);
 
@@ -201,7 +204,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
      */
     private loadGridStyle(grid: Grid, gridKey: string, gridType: GridType, styles?: Map<GridType, GridStyle>): void {
 
-        const gridKey2 = gridType.name().toLowerCase();
+        const gridKey2 = GridType[gridType].toLowerCase();
 
         let color = this.loadGridStyleColor(gridKey, gridKey2);
         let width = this.loadGridStyleWidth(gridKey, gridKey2);
@@ -254,7 +257,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
     public getPrecision(zoom: number): GridType | undefined {
         let precision: GridType | undefined;
         const zoomGrids = this.getGrids(zoom);
-        if(zoomGrids) {
+        if (zoomGrids) {
             precision = zoomGrids.getPrecision();
         }
         return precision;

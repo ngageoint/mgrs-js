@@ -20,8 +20,7 @@ export class GZDLabeler extends GridLabeler {
     /**
      * {@inheritDoc}
      */
-    public getLabels(tileBounds: Bounds, gridType: GridType,
-        zone: GridZone): GridLabel[] {
+    public getLabels(gridType: GridType, zone: GridZone): GridLabel[] {
         const labels: GridLabel[] = [];
         const bounds = zone.getBounds();
         const center = bounds.getCentroid();
