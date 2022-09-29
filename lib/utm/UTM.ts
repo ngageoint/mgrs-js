@@ -1,6 +1,7 @@
 import { GridConstants, Hemisphere, HemisphereUtils, Point } from "@ngageoint/grid-js";
 import * as sprintf from 'sprintf-js';
 import { GridZones } from "../gzd/GridZones";
+import { MGRS } from "../MGRS";
 
 /**
  * Universal Transverse Mercator Projection

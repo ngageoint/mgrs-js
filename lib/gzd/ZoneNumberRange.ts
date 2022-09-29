@@ -1,3 +1,4 @@
+import { MGRSConstants } from "../MGRSConstants";
 import { GridZones } from "./GridZones";
 
 

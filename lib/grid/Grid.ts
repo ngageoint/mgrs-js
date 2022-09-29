@@ -1,6 +1,10 @@
 import { Color } from "@ngageoint/color-js";
-import { BaseGrid, Bounds, GridStyle, PropertyConstants } from "@ngageoint/grid-js";
+import { BaseGrid, Bounds, GridStyle, GridTile, PropertyConstants } from "@ngageoint/grid-js";
 import { GridLine } from "../features/GridLine";
+import { GridZone } from "../gzd/GridZone";
+import { MGRSProperties } from "../property/MGRSProperties";
+import { GridLabel } from "./GridLabel";
+import { GridLabeler } from "./GridLabeler";
 import { GridType } from "./GridType";
 
 /**
@@ -15,7 +19,7 @@ export class Grid extends BaseGrid {
      * Default line width
      */
     public static readonly DEFAULT_WIDTH = MGRSProperties.getInstance()
-        .getDoubleProperty(PropertyConstants.GRID.toString(), PropertyConstants.WIDTH.toString());
+        .getDoubleProperty(true, PropertyConstants.GRID.toString(), PropertyConstants.WIDTH.toString());
 
     /**
      * Grid type
@@ -74,7 +78,7 @@ export class Grid extends BaseGrid {
      *            grid type
      * @return grid type line style
      */
-    public getStyle(gridType: GridType): GridStyle {
+    public getStyleFromGridType(gridType: GridType): GridStyle {
         let style: GridStyle;
         if (gridType === this.type) {
             style = this.getStyle();
@@ -92,10 +96,10 @@ export class Grid extends BaseGrid {
      * @return grid type line style
      */
     private getOrCreateStyle(gridType: GridType): GridStyle {
-        let style = this.getStyle(gridType);
+        let style = this.getStyleFromGridType(gridType);
         if (!style) {
-            style = new GridStyle();
-            this.setStyle(gridType, style);
+            style = new GridStyle(null, 0);
+            this.setStyleWithGridType(gridType, style);
         }
         return style;
     }
@@ -108,7 +112,7 @@ export class Grid extends BaseGrid {
      * @param style
      *            grid line style
      */
-    public setStyle(gridType: GridType, style: GridStyle): void {
+    public setStyleWithGridType(gridType: GridType, style: GridStyle): void {
         if (gridType < this.getPrecision()) {
             throw new Error(
                 "Grid can not define a style for a higher precision grid type. Type: "
@@ -117,7 +121,7 @@ export class Grid extends BaseGrid {
         if (gridType === this.type) {
             this.setStyle(style);
         } else {
-            this.styles.set(gridType, style != null ? style : new GridStyle());
+            this.styles.set(gridType, style != null ? style : new GridStyle(null, 0));
         }
     }
 
@@ -135,9 +139,9 @@ export class Grid extends BaseGrid {
      *            grid type
      * @return grid type line color
      */
-    public getColor(gridType: GridType): Color {
+    public getColorFromGridType(gridType: GridType): Color {
         let color: Color;
-        let style = this.getStyle(gridType);
+        let style = this.getStyleFromGridType(gridType);
         if (style) {
             color = style.getColor();
         }
@@ -155,7 +159,7 @@ export class Grid extends BaseGrid {
      * @param color
      *            grid line color
      */
-    public setColor(gridType: GridType, color: Color): void {
+    public setColorWithGridType(gridType: GridType, color: Color): void {
         this.getOrCreateStyle(gridType).setColor(color);
     }
 
@@ -166,9 +170,9 @@ export class Grid extends BaseGrid {
      *            grid type
      * @return grid type line width
      */
-    public getWidth(gridType: GridType): number {
+    public getWidthFromGridType(gridType: GridType): number {
         let width = 0;
-        let style = getStyle(gridType);
+        let style = this.getStyleFromGridType(gridType);
         if (style) {
             width = style.getWidth();
         }
@@ -186,7 +190,7 @@ export class Grid extends BaseGrid {
      * @param width
      *            grid line width
      */
-    public setWidth(gridType: GridType, width: number): void {
+    public setWidthWithGridType(gridType: GridType, width: number): void {
         this.getOrCreateStyle(gridType).setWidth(width);
     }
 
@@ -218,7 +222,7 @@ export class Grid extends BaseGrid {
      *            grid zone
      * @return lines
      */
-    public getLines(tile: GridTile, zone: GridZone): GridLine[] {
+    public getLinesFromGridTile(tile: GridTile, zone: GridZone): GridLine[] {
         return this.getLines(tile.getZoom(), tile.getBounds(), zone);
     }
 
@@ -236,7 +240,7 @@ export class Grid extends BaseGrid {
     public getLines(zoom: number, tileBounds: Bounds, zone: GridZone): GridLine[] {
         let lines: GridLine[];
         if (this.isLinesWithin(zoom)) {
-            lines = this.getLines(tileBounds, zone);
+            lines = this.getLinesFromBounds(tileBounds, zone);
         }
         return lines;
     }
@@ -250,7 +254,7 @@ export class Grid extends BaseGrid {
      *            grid zone
      * @return lines
      */
-    public getLines(tileBounds: Bounds, zone: GridZone): GridLine[] {
+    public getLinesFromBounds(tileBounds: Bounds, zone: GridZone): GridLine[] {
         return zone.getLines(tileBounds, this.type);
     }
 
@@ -263,7 +267,7 @@ export class Grid extends BaseGrid {
      *            grid zone
      * @return labels
      */
-    public getLabels(tile: GridTile, zone: GridZone): GridLabel[] {
+    public getLabelsFromGridTile(tile: GridTile, zone: GridZone): GridLabel[] {
         return this.getLabels(tile.getZoom(), tile.getBounds(), zone);
     }
 

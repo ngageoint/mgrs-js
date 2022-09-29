@@ -1,4 +1,5 @@
 import { Hemisphere } from "@ngageoint/grid-js";
+import { MGRSUtils } from "../MGRSUtils";
 
 
 /**
@@ -38,7 +39,7 @@ export class LatitudeBand {
      * @param north
      *            northern latitude
      */
-    construcxtor(letter: string, south: number, north: number) {
+    constructor(letter: string, south: number, north: number) {
         this.setLetter(letter);
         this.south = south;
         this.north = north;

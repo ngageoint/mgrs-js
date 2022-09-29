@@ -1,9 +1,13 @@
 import { Color } from "@ngageoint/color-js";
 import { BaseGrids, GridStyle, PropertyConstants } from "@ngageoint/grid-js";
+import { GZDLabeler } from "../gzd/GZDLabeler";
+import { MGRSProperties } from "../property/MGRSProperties";
 import { Grid } from "./Grid";
 import { GridLabeler } from "./GridLabeler";
 import { GridType } from "./GridType";
 import { GridTypeUtils } from "./GridTypeUtils";
+import { MGRSLabeler } from "./MGRSLabeler";
+import { ZoomGrids } from "./ZoomGrids";
 
 /**
  * Grids
@@ -48,7 +52,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
 
 
         if (types) {
-            createGrids(false);
+            this.createGrids(false);
             for (const type of types) {
                 this.getGrid(type).setEnabled(true);
             }
@@ -113,13 +117,13 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
             styles = new Map<GridType, GridStyle>();
         }
 
-        this.createGrid(GridType.GZD, new GZDLabeler(), styles, enabled);
-        this.createGrid(GridType.HUNDRED_KILOMETER, new MGRSLabeler(), styles, enabled,);
-        this.createGrid(GridType.TEN_KILOMETER, new MGRSLabeler(), styles, enabled);
-        this.createGrid(GridType.KILOMETER, new MGRSLabeler(), styles, enabled,);
-        this.createGrid(GridType.HUNDRED_METER, new MGRSLabeler(), styles, enabled);
-        this.createGrid(GridType.TEN_METER, new MGRSLabeler(), styles, enabled);
-        this.createGrid(GridType.METER, new MGRSLabeler(), styles, enabled);
+        this.createGrid(GridType.GZD, new GZDLabeler(true), styles, enabled);
+        this.createGrid(GridType.HUNDRED_KILOMETER, new MGRSLabeler(true), styles, enabled,);
+        this.createGrid(GridType.TEN_KILOMETER, new MGRSLabeler(true), styles, enabled);
+        this.createGrid(GridType.KILOMETER, new MGRSLabeler(true), styles, enabled,);
+        this.createGrid(GridType.HUNDRED_METER, new MGRSLabeler(true), styles, enabled);
+        this.createGrid(GridType.TEN_METER, new MGRSLabeler(true), styles, enabled);
+        this.createGrid(GridType.METER, new MGRSLabeler(true), styles, enabled);
 
     }
 
@@ -142,7 +146,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
 
         const gridKey = type.name().toLowerCase();
 
-        this.loadGrid(grid, gridKey, enabled, labeler);
+        this.loadGrid(grid, gridKey, labeler, enabled);
 
         if (styles) {
             styles.set(type, GridStyle.style(grid.getColor(), grid.getWidth()));
@@ -220,8 +224,8 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
 
         if (color || width) {
 
-            const style = this.getGridStyle(color, width, grid);
-            grid.setStyle(gridType, style);
+            const style = this.getGridStyle(grid, color, width);
+            grid.setStyleWithGridType(gridType, style);
 
             if (styles) {
                 styles.set(gridType, style);
@@ -276,7 +280,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
      */
     public setGrids(grids: Grid[]): void {
         const disableTypes = new Set<GridType>(
-            GridTypeUtils.values()));
+            GridTypeUtils.values());
         for (const grid of grids) {
             super.enable(grid);
             disableTypes.delete(grid.getType());
@@ -302,7 +306,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
      * @param types
      *            grid types
      */
-    public disableTypes(types: GridType[]): void {
+    public disableTypes(types: Set<GridType>): void {
         for (const type of types) {
             this.disableByType(type);
         }
@@ -450,7 +454,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
         if (precisionTypes) {
             for (const precisionType of precisionTypes) {
                 for (const type of types) {
-                    this.getGrid(type)!.setColor(color, precisionType);
+                    this.getGrid(type)!.setColorWithGridType(precisionType, color);
                 }
             }
         } else {
@@ -474,7 +478,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
         if (precisionTypes) {
             for (const precisionType of precisionTypes) {
                 for (const type of types) {
-                    this.getGrid(type)!.setWidth(width, precisionType);
+                    this.getGrid(type)!.setWidthWithGridType(width, precisionType);
                 }
             }
         } else {

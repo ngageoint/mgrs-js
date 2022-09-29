@@ -5,6 +5,7 @@ import { GridTypeUtils } from "./grid/GridTypeUtils";
 import { GridZone } from "./gzd/GridZone";
 import { UTM } from "./utm/UTM";
 import { GridZones } from "./gzd/GridZones";
+import { MGRSUtils } from "./MGRSUtils";
 
 /**
  * Military Grid Reference System Coordinate

@@ -1,5 +1,7 @@
 import { Bounds } from "@ngageoint/grid-js";
 import { BandLetterRange } from "./BandLetterRange";
+import { GridZone } from "./GridZone";
+import { ZoneNumberRange } from "./ZoneNumberRange";
 
 
 /**
@@ -86,7 +88,7 @@ export class GridRange implements IterableIterator<GridZone> {
         return Bounds.degrees(west, south, east, north);
     }
 
-    public next(): IteratorResult<string> {
+    public next(): IteratorResult<GridZone> {
         // TODO implement
         return {
             done: true,

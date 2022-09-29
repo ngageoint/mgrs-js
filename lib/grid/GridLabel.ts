@@ -1,4 +1,5 @@
 import { Bounds, Label, Point } from "@ngageoint/grid-js";
+import { MGRS } from "../MGRS";
 import { GridType } from "./GridType";
 
 /**

@@ -3,6 +3,7 @@ import { Bounds } from "@ngageoint/grid-js";
 import { GridLabel } from "../grid/GridLabel";
 import { GridLabeler } from "../grid/GridLabeler";
 import { GridType } from "../grid/GridType";
+import { MGRS } from "../MGRS";
 import { GridZone } from "./GridZone";
 
 /**

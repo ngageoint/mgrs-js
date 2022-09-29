@@ -1,5 +1,8 @@
 import { Color } from "@ngageoint/color-js";
 import { Bounds } from "@ngageoint/grid-js";
+import { GridZone } from "../gzd/GridZone";
+import { MGRS } from "../MGRS";
+import { UTM } from "../utm/UTM";
 import { GridLabel } from "./GridLabel";
 import { GridLabeler } from "./GridLabeler";
 import { GridType } from "./GridType";

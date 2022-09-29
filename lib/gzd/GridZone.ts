@@ -2,6 +2,10 @@ import { Bounds, Hemisphere, Line, Point } from "@ngageoint/grid-js";
 import { GridLine } from "../features/GridLine";
 import { GridType } from "../grid/GridType";
 import { GridTypeUtils } from "../grid/GridTypeUtils";
+import { MGRSUtils } from "../MGRSUtils";
+import { UTM } from "../utm/UTM";
+import { LatitudeBand } from "./LatitudeBand";
+import { LongitudinalStrip } from "./LongitudinalStrip";
 
 /**
  * Grid Zone
@@ -136,7 +140,7 @@ export class GridZone {
      *            grid type
      * @return lines
      */
-    public getLines(gridType: GridType): GridLine[] {
+    public getLinesFromGridType(gridType: GridType): GridLine[] {
         return this.getLines(this.bounds, gridType);
     }
 

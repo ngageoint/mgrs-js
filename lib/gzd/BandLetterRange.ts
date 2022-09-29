@@ -1,3 +1,7 @@
+import { MGRSConstants } from "../MGRSConstants";
+import { MGRSUtils } from "../MGRSUtils";
+import { GridZones } from "./GridZones";
+
 /**
  * Band Letter Range
  * 
@@ -25,7 +29,7 @@ export class BandLetterRange implements IterableIterator<string> {
      * @param north
      *            northern band letter
      */
-    constructor(south = MGRSConstants.MIN_BAND_LETTER, north: MGRSConstants.MAX_BAND_LETTER) {
+    constructor(south = MGRSConstants.MIN_BAND_LETTER, north = MGRSConstants.MAX_BAND_LETTER) {
         this.south = south;
         this.north = north;
 
