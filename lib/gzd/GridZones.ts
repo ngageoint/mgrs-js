@@ -298,7 +298,7 @@ export class GridZones {
         // Determine the zone
         const zoneValue = (longitude - MGRSConstants.MIN_LON)
             / MGRSConstants.ZONE_WIDTH;
-        let zoneNumber = 1 + (int) zoneValue;
+        let zoneNumber = 1 + ~~zoneValue;
 
         // Handle western edge cases and 180.0
         if (!eastern) {
@@ -362,7 +362,7 @@ export class GridZones {
 
         const bandValue = (latitude - MGRSConstants.MIN_LAT)
             / MGRSConstants.BAND_HEIGHT;
-        let bands = (int) bandValue;
+        let bands = ~~bandValue;
 
         // Handle 80.0 to 84.0 and southern edge cases
         if (bands >= MGRSConstants.NUM_BANDS) {
@@ -459,7 +459,7 @@ export class GridZones {
             MGRSConstants.MIN_SVALBARD_ZONE_NUMBER);
         const zoneValue = MGRSConstants.MIN_SVALBARD_ZONE_NUMBER
             + ((longitude - minimumLongitude) / MGRSConstants.ZONE_WIDTH);
-        let zone = (int) Math.round(zoneValue);
+        let zone = ~~Math.round(zoneValue);
         if (zone % 2 == 0) {
             zone--;
         }
