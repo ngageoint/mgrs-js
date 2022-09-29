@@ -116,7 +116,7 @@ export class GridZone {
      * @return true if within bounds
      */
     public isWithin(bounds: Bounds): boolean {
-        if(this.bounds.getUnit()) {
+        if (this.bounds.getUnit()) {
             bounds = bounds.toUnit(this.bounds.getUnit()!);
         }
         return this.bounds.getSouth() <= bounds.getNorth()
@@ -299,12 +299,15 @@ export class GridZone {
         // Intersection between the horizontal line and vertical bounds line
         const intersection = line.intersection(boundsLine);
 
-        // Intersection easting
-        const intersectionUTM = UTM.from(intersection, zoneNumber, hemisphere);
-        const intersectionEasting = intersectionUTM.getEasting();
+        let boundsEasting = easting;
+        if (intersection) {
+            // Intersection easting
+            const intersectionUTM = UTM.from(intersection, zoneNumber, hemisphere);
+            const intersectionEasting = intersectionUTM.getEasting();
+            boundsEasting = intersectionEasting - easting;
+        }
 
         // One meter precision just outside the bounds
-        let boundsEasting = intersectionEasting - easting;
         if (eastern) {
             boundsEasting = Math.ceil(boundsEasting);
         } else {
