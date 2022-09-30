@@ -231,9 +231,10 @@ export class MGRS {
 
         const accuracy = 5 - ~~Math.log10(type);
 
-        const easting = sprintf.sprintf(Locale.getDefault(), "%05d",
+        // TODO apply locale
+        const easting = sprintf.sprintf("%05d",
             this.easting);
-        const northing = sprintf.sprintf(Locale.getDefault(), "%05d",
+        const northing = sprintf.sprintf("%05d",
             this.northing);
 
         return easting.substring(0, accuracy) + northing.substring(0, accuracy);
