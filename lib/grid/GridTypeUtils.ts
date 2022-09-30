@@ -1,3 +1,4 @@
+import { Grid } from './Grid';
 import { GridType } from './GridType';
 
 export class GridTypeUtils {
@@ -52,57 +53,26 @@ export class GridTypeUtils {
     return precision;
   }
 
-  /**
-   * Get the less precise (larger precision value) grid types
-   *
-   * @param type
-   *            grid type
-   * @return grid types less precise
-   */
-  public static lessPrecise(type: GridType): Set<GridType> {
-    const values = GridTypeUtils.values();
-    const ordinal = Object.keys(GridType).indexOf(type.toString());
-
-    const types = new Set<GridType>();
-    for (let i = 0; i < ordinal; i++) {
-      types.add(values[i]);
-    }
-
-    return types;
-  }
-
-  /**
-   * Get the more precise (smaller precision value) grid types
-   *
-   * @param type
-   *            grid type
-   * @return grid types more precise
-   */
-  public static morePrecise(type: GridType): Set<GridType> {
-    const values = GridTypeUtils.values();
-    const ordinal = Object.keys(GridType).indexOf(type.toString());
-
-    const types = new Set<GridType>();
-    for (let i = ordinal; i < values.length; i++) {
-      types.add(values[i]);
-    }
-    return types;
-  }
-
   public static values(): GridType[] {
     const gridTypes: GridType[] = [];
-    for (const type of Object.keys(GridType)) {
-      gridTypes.push(GridType[type as keyof typeof GridType]);
+    for (const type of Object.values(GridType)) {
+      if (Number.isInteger(type)) {
+        gridTypes.push(type as number);
+      }
     }
     return gridTypes;
   }
 
   public static ordinal(type: GridType): number {
-    const values = GridTypeUtils.values();
+    const types: string[] = Object.keys(GridType);
+
     let ordinal = 0;
-    for (; ordinal < values.length; ordinal++) {
-      if (values[ordinal].valueOf() === type.valueOf()) {
-        break;
+    for (let i = 0; i < types.length; i++) {
+      if (isNaN(Number(types[i]))) {
+        if (types[i] === GridType[type]) {
+          break;
+        }
+        ordinal++;
       }
     }
 
