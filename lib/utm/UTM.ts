@@ -522,7 +522,7 @@ export class UTM {
 
     const matches = utm.match(this.utmPattern);
 
-    const zone = Number.parseInt(matches![1]);
+    const zone = Number.parseInt(matches![1], 10);
     const hemisphere = matches![2] === GridConstants.NORTH_CHAR ? Hemisphere.NORTH : Hemisphere.SOUTH;
     const easting = +matches![3];
     const northing = +matches![4];

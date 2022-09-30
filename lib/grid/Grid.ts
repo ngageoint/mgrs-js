@@ -146,7 +146,7 @@ export class Grid extends BaseGrid {
    */
   public getColorFromGridType(gridType: GridType): Color {
     let color: Color | undefined;
-    let style = this.getStyleFromGridType(gridType);
+    const style = this.getStyleFromGridType(gridType);
     if (style) {
       color = style.getColor();
     }
@@ -177,7 +177,7 @@ export class Grid extends BaseGrid {
    */
   public getWidthFromGridType(gridType: GridType): number {
     let width = 0;
-    let style = this.getStyleFromGridType(gridType);
+    const style = this.getStyleFromGridType(gridType);
     if (style) {
       width = style.getWidth();
     }

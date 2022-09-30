@@ -42,10 +42,10 @@ export class GridZones {
 
     // Create latitude bands
     let latitude = MGRSConstants.MIN_LAT;
-    let letterRange = new BandLetterRange();
+    const letterRange = new BandLetterRange();
     for (const bandLetter of letterRange) {
       const min = latitude;
-      if (bandLetter == MGRSConstants.MAX_BAND_LETTER) {
+      if (bandLetter === MGRSConstants.MAX_BAND_LETTER) {
         latitude += MGRSConstants.MAX_BAND_HEIGHT;
       } else {
         latitude += MGRSConstants.BAND_HEIGHT;
@@ -288,7 +288,7 @@ export class GridZones {
 
     // Handle western edge cases and 180.0
     if (!eastern) {
-      if (zoneNumber > 1 && zoneValue % 1.0 == 0.0) {
+      if (zoneNumber > 1 && zoneValue % 1.0 === 0.0) {
         zoneNumber--;
       }
     } else if (zoneNumber > MGRSConstants.MAX_ZONE_NUMBER) {
@@ -350,7 +350,7 @@ export class GridZones {
     // Handle 80.0 to 84.0 and southern edge cases
     if (bands >= MGRSConstants.NUM_BANDS) {
       bands--;
-    } else if (!northern && bands > 0 && bandValue % 1.0 == 0.0) {
+    } else if (!northern && bands > 0 && bandValue % 1.0 === 0.0) {
       bands--;
     }
 
@@ -387,7 +387,7 @@ export class GridZones {
    * @return true if a Svalbard GZD
    */
   public static isSvalbardLetter(bandLetter: string): boolean {
-    return bandLetter == MGRSConstants.SVALBARD_BAND_LETTER;
+    return bandLetter === MGRSConstants.SVALBARD_BAND_LETTER;
   }
 
   /**
@@ -411,18 +411,18 @@ export class GridZones {
   private static getSvalbardStrip(strip: LongitudinalStrip): LongitudinalStrip | undefined {
     let svalbardStrip: LongitudinalStrip | undefined;
 
-    const number = strip.getNumber();
-    if (number % 2 === 1) {
+    const stripNumber = strip.getNumber();
+    if (stripNumber % 2 === 1) {
       let west = strip.getWest();
       let east = strip.getEast();
       const halfWidth = (east - west) / 2.0;
-      if (number > 31) {
+      if (stripNumber > 31) {
         west -= halfWidth;
       }
-      if (number < 37) {
+      if (stripNumber < 37) {
         east += halfWidth;
       }
-      svalbardStrip = new LongitudinalStrip(number, west, east);
+      svalbardStrip = new LongitudinalStrip(stripNumber, west, east);
     }
 
     return svalbardStrip;
@@ -440,7 +440,7 @@ export class GridZones {
     const zoneValue =
       MGRSConstants.MIN_SVALBARD_ZONE_NUMBER + (longitude - minimumLongitude) / MGRSConstants.ZONE_WIDTH;
     let zone = ~~Math.round(zoneValue);
-    if (zone % 2 == 0) {
+    if (zone % 2 === 0) {
       zone--;
     }
     return zone;
@@ -489,20 +489,20 @@ export class GridZones {
    * @return Norway strip
    */
   private static getNorwayStrip(strip: LongitudinalStrip): LongitudinalStrip {
-    const number = strip.getNumber();
+    const stripNumber = strip.getNumber();
     let west = strip.getWest();
     let east = strip.getEast();
     const halfWidth = (east - west) / 2.0;
 
     let expand = 0;
-    if (number == MGRSConstants.MIN_NORWAY_ZONE_NUMBER) {
+    if (stripNumber === MGRSConstants.MIN_NORWAY_ZONE_NUMBER) {
       east -= halfWidth;
       expand++;
-    } else if (number == MGRSConstants.MAX_NORWAY_ZONE_NUMBER) {
+    } else if (stripNumber === MGRSConstants.MAX_NORWAY_ZONE_NUMBER) {
       west -= halfWidth;
     }
 
-    return new LongitudinalStrip(number, west, east, expand);
+    return new LongitudinalStrip(stripNumber, west, east, expand);
   }
 
   /**

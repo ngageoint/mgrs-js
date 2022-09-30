@@ -262,7 +262,7 @@ export class MGRS {
     let accuracy = 5;
 
     for (let accuracyLevel = 10; accuracyLevel <= 100000; accuracyLevel *= 10) {
-      if (this.easting % accuracyLevel != 0 || this.northing % accuracyLevel != 0) {
+      if (this.easting % accuracyLevel !== 0 || this.northing % accuracyLevel !== 0) {
         break;
       }
       accuracy--;
@@ -430,7 +430,7 @@ export class MGRS {
 
     const matches = MGRS.removeSpaces(mgrs).match(MGRS.mgrsPattern);
 
-    const zone = Number.parseInt(matches![1]);
+    const zone = Number.parseInt(matches![1], 10);
     const band = matches![2].toUpperCase().charAt(0);
 
     const gridZone = GridZones.getGridZone(zone, band);

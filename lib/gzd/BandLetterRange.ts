@@ -93,11 +93,11 @@ export class BandLetterRange implements IterableIterator<string> {
 
   public next(): IteratorResult<string> {
     if (this.letter <= this.north) {
-      const value = this.letter;
+      const currentLetter = this.letter;
       this.letter = MGRSUtils.nextBandLetter(this.letter);
       return {
         done: false,
-        value: value,
+        value: currentLetter,
       };
     } else {
       return {

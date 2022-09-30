@@ -187,7 +187,7 @@ export class GridZone {
             const northingPrecision = GridTypeUtils.getPrecision(northing);
 
             let southwest = UTM.point(zoneNumber, hemisphere, easting, northing);
-            let northwest = UTM.point(zoneNumber, hemisphere, easting, northing + precision);
+            const northwest = UTM.point(zoneNumber, hemisphere, easting, northing + precision);
             let southeast = UTM.point(zoneNumber, hemisphere, easting + precision, northing);
 
             // For points outside the tile grid longitude bounds,

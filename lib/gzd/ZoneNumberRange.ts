@@ -94,11 +94,11 @@ export class ZoneNumberRange implements IterableIterator<number> {
 
   public next(): IteratorResult<number> {
     if (this.zoneNumber <= this.east) {
-      const value = this.zoneNumber;
+      const currentZoneNumber = this.zoneNumber;
       this.zoneNumber++;
       return {
         done: false,
-        value: value,
+        value: currentZoneNumber,
       };
     } else {
       return {

@@ -52,7 +52,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
     if (types) {
       this.createGrids(false);
       for (const type of types) {
-        let grid = this.getGrid(type);
+        const grid = this.getGrid(type);
         if (grid) {
           grid.setEnabled(true);
         }
