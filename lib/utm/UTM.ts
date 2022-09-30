@@ -220,11 +220,13 @@ export class UTM {
             throw new Error("Invalid UTM: " + utm);
         }
 
-        const zone = Number.parseInt(matcher.group(1));
-        const hemisphere = matcher.group(2).equalsIgnoreCase(
-            GridConstants.NORTH_CHAR) ? Hemisphere.NORTH : Hemisphere.SOUTH;
-        const easting = Double.parseDouble(matcher.group(3));
-        const northing = Double.parseDouble(matcher.group(4));
+        const matches = utm.match(this.utmPattern);
+
+        const zone = Number.parseInt(matches![1]);
+        const hemisphere = matches![2] ===
+            GridConstants.NORTH_CHAR ? Hemisphere.NORTH : Hemisphere.SOUTH;
+        const easting = +matches![3];
+        const northing = +matches![4];
 
         return UTM.create(zone, hemisphere, easting, northing);
     }

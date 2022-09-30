@@ -9,7 +9,7 @@ export class GridTypeUtils {
      * @return accuracy digits
      */
     public static getAccuracy(gridType: GridType): number {
-        return Math.max(gridType.ordinal() - 1, 0);
+        return Math.max(GridTypeUtils.ordinal(gridType) - 1, 0);
     }
 
     /**
@@ -98,6 +98,18 @@ export class GridTypeUtils {
             gridTypes.push(GridType[type as keyof typeof GridType]);
         }
         return gridTypes;
+    }
+
+    public static ordinal(type: GridType): number {
+        const values = GridTypeUtils.values();
+        let ordinal = 0;
+        for(; ordinal < values.length; ordinal++) {
+            if(values[ordinal].valueOf() === type.valueOf()) {
+                break;
+            }
+        }
+
+        return ordinal;
     }
 
 }
