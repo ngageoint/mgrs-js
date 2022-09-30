@@ -361,9 +361,9 @@ export class GridZones {
       bands++;
     }
 
-    let letter = MGRSConstants.MIN_BAND_LETTER;
-    letter += bands;
-    return letter;
+    let letter = MGRSConstants.MIN_BAND_LETTER.codePointAt(0);
+    letter! += bands;
+    return String.fromCharCode(letter!);
   }
 
   /**
