@@ -1,4 +1,5 @@
 import { expect } from "chai";
+import { Point } from '@ngageoint/grid-js';
 import { MGRS } from '../lib/MGRS';
 import { GridType } from '../lib/grid/GridType';
 import { UTM } from '../lib/utm/UTM';
@@ -327,7 +328,7 @@ describe('MGRS Tests', function () {
             let gzd = zoneNumber.toString() + bandLetter;
             expect(MGRS.isMGRS(gzd)).to.be.true;
             let mgrs = MGRS.parse(gzd);
-            assertNotNull(mgrs);
+            expect(mgrs).to.not.be.null;
             expect(zoneNumber, mgrs.getZone());
             expect(bandLetter, mgrs.getBand());
 
@@ -349,89 +350,72 @@ describe('MGRS Tests', function () {
      *             upon failure to parse
      */
     it('test Svalbard parse', function () {
-
         expect(MGRS.isMGRS("31X")).to.be.true;
-        assertNotNull(MGRS.parse("31X"));
+        expect(MGRS.parse("31X")).to.not.be.null;
         expect(MGRS.isMGRS("32X")).to.be.false;
         try {
-            assertNull(MGRS.parse("32X"));
-            fail("Expected parse exception");
+            expect(MGRS.parse("32X")).to.be.null;
+            expect.fail("Expected parse exception");
         } catch (Error) {
         }
         expect(MGRS.isMGRS("32XMH")).to.be.false;
         try {
             MGRS.parse("32XMH");
-            fail("Expected parse exception");
+            expect.fail("Expected parse exception");
         } catch (Error) {
         }
         expect(MGRS.isMGRS("32XMH11")).to.be.false;
         try {
             MGRS.parse("32XMH11");
-            fail("Expected parse exception");
+            expect.fail("Expected parse exception");
         } catch (Error) {
         }
         expect(MGRS.isMGRS("32XMH1111")).to.be.false;
         try {
             MGRS.parse("32XMH1111");
-            fail("Expected parse exception");
+            expect.fail("Expected parse exception");
         } catch (Error) {
         }
         expect(MGRS.isMGRS("32XMH111111")).to.be.false;
         try {
             MGRS.parse("32XMH111111");
-            fail("Expected parse exception");
+            expect.fail("Expected parse exception");
         } catch (Error) {
         }
         expect(MGRS.isMGRS("32XMH11111111")).to.be.false;
         try {
             MGRS.parse("32XMH11111111");
-            fail("Expected parse exception");
+            expect.fail("Expected parse exception");
         } catch (Error) {
         }
         expect(MGRS.isMGRS("32XMH111111111")).to.be.false;
         try {
             MGRS.parse("32XMH111111111");
-            fail("Expected parse exception");
+            expect.fail("Expected parse exception");
         } catch (Error) {
         }
         expect(MGRS.isMGRS("33X")).to.be.true;
-        assertNotNull(MGRS.parse("33X"));
+        expect(MGRS.parse("33X")).to.not.be.null;
         expect(MGRS.isMGRS("34X")).to.be.false;
         try {
-            assertNull(MGRS.parse("34X"));
-            fail("Expected parse exception");
+            expect(MGRS.parse("34X")).to.be.null;
+            expect.fail("Expected parse exception");
         } catch (Error) {
         }
         expect(MGRS.isMGRS("35X")).to.be.true;
-        assertNotNull(MGRS.parse("35X"));
+        expect(MGRS.parse("35X")).to.not.be.null;
         expect(MGRS.isMGRS("36X")).to.be.false;
         try {
-            assertNull(MGRS.parse("36X"));
-            fail("Expected parse exception");
+            expect(MGRS.parse("36X")).to.be.null;
+            expect.fail("Expected parse exception");
         } catch (Error) {
         }
         expect(MGRS.isMGRS("37X")).to.be.true;
-        assertNotNull(MGRS.parse("37X"));
+        expect(MGRS.parse("37X")).to.not.be.null;
 
     });
 
 });
-
-/**
-    * Test the WGS84 coordinate with expected MGSR coordinate
-    * 
-    * @param longitude
-    *            longitude in degrees
-    * @param latitude
-    *            latitude in degrees
-    * @param value
-    *            MGRS value
-    * @throws ParseException
-    *             upon failure to parse
-    */
-function testCoordinate(longitude: number, latitude: number, value: string): void {
-    testCoordinate(longitude, latitude, value, true);
-}
 
 /**
  * Test the WGS84 coordinate with expected MGSR coordinate
@@ -448,27 +432,10 @@ function testCoordinate(longitude: number, latitude: number, value: string): voi
  *             upon failure to parse
  */
 function testCoordinate(longitude: number, latitude: number, value: string,
-    test100k: boolean): void {
+    test100k = true): void {
     const point = Point.point(longitude, latitude);
     testCoordinate(point, value, test100k);
     testCoordinate(point.toMeters(), value, test100k);
-}
-
-/**
-* Test the WGS84 coordinate with expected MGSR coordinate
-* 
-* @param longitude
-*            longitude in degrees
-* @param latitude
-*            latitude in degrees
-* @param value
-*            MGRS value
-* @throws ParseException
-*             upon failure to parse
-*/
-function testCoordinateMeters(longitude: number, latitude: number,
-    value: string): void {
-    testCoordinateMeters(longitude, latitude, value, true);
 }
 
 /**
@@ -486,7 +453,7 @@ function testCoordinateMeters(longitude: number, latitude: number,
 *             upon failure to parse
 */
 function testCoordinateMeters(longitude: number, latitude: number,
-    value: string, test100k: boolean): void {
+    value: string, test100k = true): void {
     const point = Point.meters(longitude, latitude);
     testCoordinate(point, value, test100k);
     testCoordinate(point.toDegrees(), value, test100k);
