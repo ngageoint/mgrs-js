@@ -408,8 +408,8 @@ export class MGRS {
     const rowLetter = MGRS.getRowLetterFromUTM(utm);
 
     // truncate easting/northing to within 100km grid square
-    const easting = utm.getEasting() % 100000;
-    const northing = utm.getNorthing() % 100000;
+    const easting = ~~(utm.getEasting() % 100000);
+    const northing = ~~(utm.getNorthing() % 100000);
 
     return MGRS.create(utm.getZone(), bandLetter, easting, northing, columnLetter, rowLetter);
   }
