@@ -28,7 +28,7 @@ describe('MGRS Tests', function () {
         expect(MGRS.precision(mgrsValue)).to.equal(GridType.TEN_METER);
         expect(MGRS.accuracy(mgrsValue)).to.equal(4);
         expect(mgrs.coordinate(GridType.TEN_METER)).to.equal(mgrsValue);
-        expect(mgrs.coordinate(4)).to.equal(mgrsValue);
+        expect(mgrs.coordinateFromAccuracy(4)).to.equal(mgrsValue);
         expect(mgrs.precision()).to.equal(GridType.TEN_METER);
         expect(mgrs.accuracy()).to.equal(4);
 
@@ -42,7 +42,7 @@ describe('MGRS Tests', function () {
         mgrs = MGRS.parse(mgrsValue.toLowerCase());
         expect(MGRS.precision(mgrsValue)).to.equal(GridType.METER);
         expect(MGRS.accuracy(mgrsValue)).to.equal(5);
-        expect(mgrs.toString()).to.equal(mgrsValue.replace("\\s", ""));
+        expect(mgrs.toString()).to.equal(mgrsValue.replace(/\s/g, ""));
 
         utm = mgrs.toUTM();
         expect(utm.toString()).to.equal(utmValue);
@@ -52,7 +52,7 @@ describe('MGRS Tests', function () {
         expect(utm.toString()).to.equal(utmValue);
 
         mgrs = utm.toMGRS();
-        expect(mgrs.toString()).to.equal(mgrsValue.replace("\\s", ""));
+        expect(mgrs.toString()).to.equal(mgrsValue.replace(/\s/g, ""));
 
         utmValue = "33 N 474596.26 8643594.54";
 
@@ -61,7 +61,7 @@ describe('MGRS Tests', function () {
         expect(utm.toString()).to.equal(utmValue);
 
         mgrs = utm.toMGRS();
-        expect(mgrs.toString()).to.equal(mgrsValue.replace("\\s", ""));
+        expect(mgrs.toString()).to.equal(mgrsValue.replace(/\s/g, ""));
 
         mgrsValue = "33X";
         expect(MGRS.isMGRS(mgrsValue)).to.be.true;

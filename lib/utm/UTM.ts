@@ -1,5 +1,6 @@
 import { GridConstants, Hemisphere, HemisphereUtils, Point } from '@ngageoint/grid-js';
 import * as sprintf from 'sprintf-js';
+import DecimalFormat from 'decimal-format';
 import { GridZones } from '../gzd/GridZones';
 import { MGRS } from '../MGRS';
 
@@ -477,13 +478,15 @@ export class UTM {
   public format(): string {
     let value = '';
 
+    const formatter = new DecimalFormat("0.##");
+
     value += sprintf.sprintf('%02d', this.zone);
     value += ' ';
     value += this.hemisphere === Hemisphere.NORTH ? GridConstants.NORTH_CHAR : GridConstants.SOUTH_CHAR;
     value += ' ';
-    value += this.easting.toFixed(2);
+    value += formatter.format(this.easting);
     value += ' ';
-    value += this.northing.toFixed(2);
+    value += formatter.format(this.northing);
 
     return value.toString();
   }
