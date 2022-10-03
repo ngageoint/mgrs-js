@@ -18,3 +18,4 @@ Software source code previously released under an open source license and then m
 ![Build & Test](https://github.com/ngageoint/mgrs-js/actions/workflows/build-test.yml/badge.svg)
 [![NPM](https://img.shields.io/npm/v/@ngageoint/mgrs-js.svg)](https://www.npmjs.com/package/@ngageoint/mgrs-js)
 [![Coverage Status](https://coveralls.io/repos/github/ngageoint/mgrs-js/badge.svg)](https://coveralls.io/github/ngageoint/mgrs-js)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
