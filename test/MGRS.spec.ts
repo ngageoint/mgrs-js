@@ -25,12 +25,12 @@ describe('MGRS Tests', function () {
 
         expect(MGRS.isMGRS(mgrsValue));
         let mgrs = MGRS.parse(mgrsValue);
-        expect(GridType.TEN_METER, MGRS.precision(mgrsValue));
-        expect(4, MGRS.accuracy(mgrsValue));
-        expect(mgrsValue, mgrs.coordinate(GridType.TEN_METER));
-        expect(mgrsValue, mgrs.coordinate(4));
-        expect(GridType.TEN_METER, mgrs.precision());
-        expect(4, mgrs.accuracy());
+        expect(MGRS.precision(mgrsValue)).to.equal(GridType.TEN_METER);
+        expect(MGRS.accuracy(mgrsValue)).to.equal(4);
+        expect(mgrs.coordinate(GridType.TEN_METER)).to.equal(mgrsValue);
+        expect(mgrs.coordinate(4)).to.equal(mgrsValue);
+        expect(mgrs.precision()).to.equal(GridType.TEN_METER);
+        expect(mgrs.accuracy()).to.equal(4);
 
         let utm = mgrs.toUTM();
         expect(utmValue, utm.toString());
@@ -40,167 +40,167 @@ describe('MGRS Tests', function () {
 
         expect(MGRS.isMGRS(mgrsValue)).to.be.true;
         mgrs = MGRS.parse(mgrsValue.toLowerCase());
-        expect(GridType.METER, MGRS.precision(mgrsValue));
-        expect(5, MGRS.accuracy(mgrsValue));
-        expect(mgrsValue.replace("\\s", ""), mgrs.toString());
+        expect(MGRS.precision(mgrsValue)).to.equal(GridType.METER);
+        expect(MGRS.accuracy(mgrsValue)).to.equal(5);
+        expect(mgrs.toString()).to.equal(mgrsValue.replace("\\s", ""));
 
         utm = mgrs.toUTM();
-        expect(utmValue, utm.toString());
+        expect(utm.toString()).to.equal(utmValue);
 
         expect(UTM.isUTM(utmValue)).to.be.true;
         utm = UTM.parse(utmValue);
-        expect(utmValue, utm.toString());
+        expect(utm.toString()).to.equal(utmValue);
 
         mgrs = utm.toMGRS();
-        expect(mgrsValue.v("\\s", ""), mgrs.toString());
+        expect(mgrs.toString()).to.equal(mgrsValue.replace("\\s", ""));
 
         utmValue = "33 N 474596.26 8643594.54";
 
         expect(UTM.isUTM(utmValue)).to.be.true;
         utm = UTM.parse(utmValue.toLowerCase());
-        expect(utmValue, utm.toString());
+        expect(utm.toString()).to.equal(utmValue);
 
         mgrs = utm.toMGRS();
-        expect(mgrsValue.replace("\\s", ""), mgrs.toString());
+        expect(mgrs.toString()).to.equal(mgrsValue.replace("\\s", ""));
 
         mgrsValue = "33X";
         expect(MGRS.isMGRS(mgrsValue)).to.be.true;
         mgrs = MGRS.parse(mgrsValue);
-        expect(GridType.GZD, MGRS.precision(mgrsValue));
-        expect(0, MGRS.accuracy(mgrsValue));
-        expect(33, mgrs.getZone());
-        expect('X', mgrs.getBand());
-        expect('T', mgrs.getColumn());
-        expect('V', mgrs.getRow());
-        expect("TV", mgrs.getColumnRowId());
-        expect(93363, mgrs.getEasting());
-        expect(99233, mgrs.getNorthing());
-        expect("33XTV9336399233", mgrs.coordinate());
+        expect(MGRS.precision(mgrsValue)).to.equal(GridType.GZD);
+        expect(MGRS.accuracy(mgrsValue)).to.equal(0);
+        expect(mgrs.getZone()).to.equal(33);
+        expect(mgrs.getBand()).to.equal('X');
+        expect(mgrs.getColumn()).to.equal('T');
+        expect(mgrs.getRow()).to.equal('V');
+        expect(mgrs.getColumnRowId()).to.equal('TV');
+        expect(mgrs.getEasting()).to.equal(93363);
+        expect(mgrs.getNorthing()).to.equal(99233);
+        expect(mgrs.coordinate()).to.equal("33XTV9336399233");
         let point = mgrs.toPoint();
-        expect(9.0, point.getLongitude(), 0.0001);
-        expect(72.0, point.getLatitude(), 0.0001);
-        expect(GridType.METER, mgrs.precision());
-        expect(5, mgrs.accuracy());
+        expect(point.getLongitude()).to.be.approximately(9.0, 0.0001);
+        expect(point.getLatitude()).to.be.approximately(72.0, 0.0001);
+        expect(mgrs.precision()).to.equal(GridType.METER);
+        expect(mgrs.accuracy()).to.equal(5);
 
         mgrsValue = "33XVG";
         expect(MGRS.isMGRS(mgrsValue)).to.be.true;
         mgrs = MGRS.parse(mgrsValue);
-        expect(GridType.HUNDRED_KILOMETER, MGRS.precision(mgrsValue));
-        expect(0, MGRS.accuracy(mgrsValue));
-        expect(33, mgrs.getZone());
-        expect('X', mgrs.getBand());
-        expect('V', mgrs.getColumn());
-        expect('G', mgrs.getRow());
-        expect("VG", mgrs.getColumnRowId());
-        expect(0, mgrs.getEasting());
-        expect(0, mgrs.getNorthing());
-        expect(mgrsValue, mgrs.coordinate(GridType.HUNDRED_KILOMETER));
-        expect("33XVG0000000000", mgrs.coordinate());
+        expect(MGRS.precision(mgrsValue)).to.equal(GridType.HUNDRED_KILOMETER);
+        expect(MGRS.accuracy(mgrsValue)).to.equal(0);
+        expect(mgrs.getZone()).to.equal(33);
+        expect(mgrs.getBand()).to.equal('X');
+        expect(mgrs.getColumn()).to.equal('V');
+        expect(mgrs.getRow()).to.equal('G');
+        expect(mgrs.getColumnRowId()).to.equal('VG');
+        expect(mgrs.getEasting()).to.equal(0);
+        expect(mgrs.getNorthing()).to.equal(0);
+        expect(mgrs.coordinate(GridType.HUNDRED_KILOMETER)).to.equal(mgrsValue);
+        expect(mgrs.coordinate()).to.equal("33XVG0000000000");
         point = mgrs.toPoint();
-        expect(10.8756458, point.getLongitude(), 0.0001);
-        expect(77.4454720, point.getLatitude(), 0.0001);
-        expect(GridType.HUNDRED_KILOMETER, mgrs.precision());
-        expect(0, mgrs.accuracy());
+        expect(point.getLongitude()).to.be.approximately(10.8756458, 0.0001);
+        expect(point.getLatitude()).to.be.approximately(77.4454720, 0.0001);
+        expect(mgrs.precision()).to.equal(GridType.HUNDRED_KILOMETER);
+        expect(mgrs.accuracy()).to.equal(0);
 
         mgrsValue = "33XVG74";
         expect(MGRS.isMGRS(mgrsValue)).to.be.true;
         mgrs = MGRS.parse(mgrsValue);
-        expect(GridType.TEN_KILOMETER, MGRS.precision(mgrsValue));
-        expect(1, MGRS.accuracy(mgrsValue));
-        expect(33, mgrs.getZone());
-        expect('X', mgrs.getBand());
-        expect('V', mgrs.getColumn());
-        expect('G', mgrs.getRow());
-        expect("VG", mgrs.getColumnRowId());
-        expect(70000, mgrs.getEasting());
-        expect(40000, mgrs.getNorthing());
-        expect(mgrsValue, mgrs.coordinate(GridType.TEN_KILOMETER));
-        expect("33XVG7000040000", mgrs.coordinate());
+        expect(MGRS.precision(mgrsValue)).to.equal(GridType.TEN_KILOMETER);
+        expect(MGRS.accuracy(mgrsValue)).to.equal(1);
+        expect(mgrs.getZone()).to.equal(33);
+        expect(mgrs.getBand()).to.equal('X');
+        expect(mgrs.getColumn()).to.equal('V');
+        expect(mgrs.getRow()).to.equal('G');
+        expect(mgrs.getColumnRowId()).to.equal('VG');
+        expect(mgrs.getEasting()).to.equal(70000);
+        expect(mgrs.getNorthing()).to.equal(40000);
+        expect(mgrs.coordinate(GridType.TEN_KILOMETER)).to.equal(mgrsValue);
+        expect(mgrs.coordinate()).to.equal("33XVG7000040000");
         point = mgrs.toPoint();
-        expect(13.7248758, point.getLongitude(), 0.0001);
-        expect(77.8324735, point.getLatitude(), 0.0001);
-        expect(GridType.TEN_KILOMETER, mgrs.precision());
-        expect(1, mgrs.accuracy());
+        expect(point.getLongitude()).to.be.approximately(13.7248758, 0.0001);
+        expect(point.getLatitude()).to.be.approximately(77.8324735, 0.0001);
+        expect(mgrs.precision()).to.equal(GridType.TEN_KILOMETER);
+        expect(mgrs.accuracy()).to.equal(1);
 
         mgrsValue = "33XVG7443";
         expect(MGRS.isMGRS(mgrsValue)).to.be.true;
         mgrs = MGRS.parse(mgrsValue);
-        expect(GridType.KILOMETER, MGRS.precision(mgrsValue));
-        expect(2, MGRS.accuracy(mgrsValue));
-        expect(33, mgrs.getZone());
-        expect('X', mgrs.getBand());
-        expect('V', mgrs.getColumn());
-        expect('G', mgrs.getRow());
-        expect("VG", mgrs.getColumnRowId());
-        expect(74000, mgrs.getEasting());
-        expect(43000, mgrs.getNorthing());
-        expect(mgrsValue, mgrs.coordinate(GridType.KILOMETER));
-        expect("33XVG7400043000", mgrs.coordinate());
+        expect(MGRS.precision(mgrsValue)).to.equal(GridType.KILOMETER);
+        expect(MGRS.accuracy(mgrsValue)).to.equal(2);
+        expect(mgrs.getZone()).to.equal(33);
+        expect(mgrs.getBand()).to.equal('X');
+        expect(mgrs.getColumn()).to.equal('V');
+        expect(mgrs.getRow()).to.equal('G');
+        expect(mgrs.getColumnRowId()).to.equal('VG');
+        expect(mgrs.getEasting()).to.equal(74000);
+        expect(mgrs.getNorthing()).to.equal(43000);
+        expect(mgrs.coordinate(GridType.KILOMETER)).to.equal(mgrsValue);
+        expect(mgrs.coordinate()).to.equal("33XVG7400043000");
         point = mgrs.toPoint();
-        expect(13.8924385, point.getLongitude(), 0.0001);
-        expect(77.8600782, point.getLatitude(), 0.0001);
-        expect(GridType.KILOMETER, mgrs.precision());
-        expect(2, mgrs.accuracy());
+        expect(point.getLongitude()).to.be.approximately(13.8924385, 0.0001);
+        expect(point.getLatitude(),).to.be.approximately(77.8600782, 0.0001);
+        expect(mgrs.precision()).to.equal(GridType.KILOMETER);
+        expect(mgrs.accuracy()).to.equal(2);
 
         mgrsValue = "33XVG745435";
         expect(MGRS.isMGRS(mgrsValue)).to.be.true;
         mgrs = MGRS.parse(mgrsValue);
-        expect(GridType.HUNDRED_METER, MGRS.precision(mgrsValue));
-        expect(3, MGRS.accuracy(mgrsValue));
-        expect(33, mgrs.getZone());
-        expect('X', mgrs.getBand());
-        expect('V', mgrs.getColumn());
-        expect('G', mgrs.getRow());
-        expect("VG", mgrs.getColumnRowId());
-        expect(74500, mgrs.getEasting());
-        expect(43500, mgrs.getNorthing());
-        expect(mgrsValue, mgrs.coordinate(GridType.HUNDRED_METER));
-        expect("33XVG7450043500", mgrs.coordinate());
+        expect(MGRS.precision(mgrsValue)).to.equal(GridType.HUNDRED_METER);
+        expect(MGRS.accuracy(mgrsValue)).to.equal(3);
+        expect(mgrs.getZone()).to.equal(33);
+        expect(mgrs.getBand()).to.equal('X');
+        expect(mgrs.getColumn()).to.equal('V');
+        expect(mgrs.getRow()).to.equal('G');
+        expect(mgrs.getColumnRowId()).to.equal('VG');
+        expect(mgrs.getEasting()).to.equal(74500);
+        expect(mgrs.getNorthing()).to.equal(43500);
+        expect(mgrs.coordinate(GridType.HUNDRED_METER)).to.equal(mgrsValue);
+        expect(mgrs.coordinate()).to.equal("33XVG7450043500");
         point = mgrs.toPoint();
-        expect(13.9133378, point.getLongitude(), 0.0001);
-        expect(77.8646415, point.getLatitude(), 0.0001);
-        expect(GridType.HUNDRED_METER, mgrs.precision());
-        expect(3, mgrs.accuracy());
+        expect(point.getLongitude()).to.be.approximately(13.9133378, 0.0001);
+        expect(point.getLatitude()).to.be.approximately(77.8646415, 0.0001);
+        expect(mgrs.precision()).to.equal(GridType.HUNDRED_METER);
+        expect(mgrs.accuracy()).to.equal(3);
 
         mgrsValue = "33XVG74594359";
         expect(MGRS.isMGRS(mgrsValue)).to.be.true;
         mgrs = MGRS.parse(mgrsValue);
-        expect(GridType.TEN_METER, MGRS.precision(mgrsValue));
-        expect(4, MGRS.accuracy(mgrsValue));
-        expect(33, mgrs.getZone());
-        expect('X', mgrs.getBand());
-        expect('V', mgrs.getColumn());
-        expect('G', mgrs.getRow());
-        expect("VG", mgrs.getColumnRowId());
-        expect(74590, mgrs.getEasting());
-        expect(43590, mgrs.getNorthing());
-        expect(mgrsValue, mgrs.coordinate(GridType.TEN_METER));
-        expect("33XVG7459043590", mgrs.coordinate());
+        expect(MGRS.precision(mgrsValue)).to.equal(GridType.TEN_METER);
+        expect(MGRS.accuracy(mgrsValue)).to.equal(4);
+        expect(mgrs.getZone()).to.equal(33);
+        expect(mgrs.getBand()).to.equal('X');
+        expect(mgrs.getColumn()).to.equal('V');
+        expect(mgrs.getRow()).to.equal('G');
+        expect(mgrs.getColumnRowId()).to.equal('VG');
+        expect(mgrs.getEasting()).to.equal(74590);
+        expect(mgrs.getNorthing()).to.equal(43590);
+        expect(mgrs.coordinate(GridType.TEN_METER)).to.equal(mgrsValue);
+        expect(mgrs.coordinate()).to.equal("33XVG7459043590");
         point = mgrs.toPoint();
-        expect(13.9171014, point.getLongitude(), 0.0001);
-        expect(77.8654628, point.getLatitude(), 0.0001);
-        expect(GridType.TEN_METER, mgrs.precision());
-        expect(4, mgrs.accuracy());
+        expect(point.getLongitude()).to.be.approximately(13.9171014, 0.0001);
+        expect(point.getLatitude()).to.be.approximately(77.8654628, 0.0001);
+        expect(mgrs.precision()).to.equal(GridType.TEN_METER);
+        expect(mgrs.accuracy()).to.equal(4);
 
         mgrsValue = "33XVG7459743593";
         expect(MGRS.isMGRS(mgrsValue)).to.be.true;
         mgrs = MGRS.parse(mgrsValue);
-        expect(GridType.METER, MGRS.precision(mgrsValue));
-        expect(5, MGRS.accuracy(mgrsValue));
-        expect(33, mgrs.getZone());
-        expect('X', mgrs.getBand());
-        expect('V', mgrs.getColumn());
-        expect('G', mgrs.getRow());
-        expect("VG", mgrs.getColumnRowId());
-        expect(74597, mgrs.getEasting());
-        expect(43593, mgrs.getNorthing());
-        expect(mgrsValue, mgrs.coordinate(GridType.METER));
-        expect("33XVG7459743593", mgrs.coordinate());
+        expect(MGRS.precision(mgrsValue)).to.equal(GridType.METER);
+        expect(MGRS.accuracy(mgrsValue)).to.equal(5);
+        expect(mgrs.getZone()).to.equal(33);
+        expect(mgrs.getBand()).to.equal('X');
+        expect(mgrs.getColumn()).to.equal('V');
+        expect(mgrs.getRow()).to.equal('G');
+        expect(mgrs.getColumnRowId()).to.equal('VG');
+        expect(mgrs.getEasting()).to.equal(74597);
+        expect(mgrs.getNorthing()).to.equal(43593);
+        expect(mgrs.coordinate(GridType.METER)).to.equal(mgrsValue);
+        expect(mgrs.coordinate()).to.equal("33XVG7459743593");
         point = mgrs.toPoint();
-        expect(13.9173973, point.getLongitude(), 0.0001);
-        expect(77.8654908, point.getLatitude(), 0.0001);
-        expect(GridType.METER, mgrs.precision());
-        expect(5, mgrs.accuracy());
+        expect(point.getLongitude()).to.be.approximately(13.9173973, 0.0001);
+        expect(point.getLatitude()).to.be.approximately(77.8654908, 0.0001);
+        expect(mgrs.precision()).to.equal(GridType.METER);
+        expect(mgrs.accuracy()).to.equal(5);
 
     });
 
@@ -216,71 +216,71 @@ describe('MGRS Tests', function () {
         expect(MGRS.isMGRS(mgrsValue)).to.be.true;
         let mgrs = MGRS.parse(mgrsValue);
         let point = mgrs.toPoint();
-        expect(3.0, point.getLongitude(), 0.0001);
-        expect(60.3007719, point.getLatitude(), 0.0001);
+        expect(point.getLongitude()).to.be.approximately(3.0, 0.0001);
+        expect(point.getLatitude()).to.be.approximately(60.3007719, 0.0001);
         let comparePoint = MGRS.parse(mgrs.coordinate()).toPoint();
-        expect(comparePoint.getLongitude(), point.getLongitude(), 0.0001);
-        expect(comparePoint.getLatitude(), point.getLatitude(), 0.0001);
+        expect(point.getLongitude()).to.be.approximately(comparePoint.getLongitude(), 0.0001);
+        expect(point.getLatitude()).to.be.approximately(comparePoint.getLatitude(), 0.0001);
 
         mgrsValue = "32VKS";
         expect(MGRS.isMGRS(mgrsValue)).to.be.true;
         mgrs = MGRS.parse(mgrsValue);
         point = mgrs.toPoint();
-        expect(3.0, point.getLongitude(), 0.0001);
-        expect(63.9024981, point.getLatitude(), 0.0001);
+        expect(point.getLongitude()).to.be.approximately(3.0, 0.0001);
+        expect(point.getLatitude()).to.be.approximately(63.9024981, 0.0001);
         comparePoint = MGRS.parse(mgrs.coordinate()).toPoint();
-        expect(comparePoint.getLongitude(), point.getLongitude(), 0.0001);
-        expect(comparePoint.getLatitude(), point.getLatitude(), 0.0001);
+        expect(point.getLongitude()).to.be.approximately(comparePoint.getLongitude(), 0.0001);
+        expect(point.getLatitude()).to.be.approximately(comparePoint.getLatitude(), 0.0001);
 
         mgrsValue = "32VJR";
         expect(MGRS.isMGRS(mgrsValue)).to.be.true;
         mgrs = MGRS.parse(mgrsValue);
         point = mgrs.toPoint();
-        expect(3.0, point.getLongitude(), 0.0001);
-        expect(63.0020546, point.getLatitude(), 0.0001);
+        expect(point.getLongitude()).to.be.approximately(3.0, 0.0001);
+        expect(point.getLatitude()).to.be.approximately(63.0020546, 0.0001);
         comparePoint = MGRS.parse(mgrs.coordinate()).toPoint();
-        expect(comparePoint.getLongitude(), point.getLongitude(), 0.0001);
-        expect(comparePoint.getLatitude(), point.getLatitude(), 0.0001);
+        expect(point.getLongitude()).to.be.approximately(comparePoint.getLongitude(), 0.0001);
+        expect(point.getLatitude()).to.be.approximately(comparePoint.getLatitude(), 0.0001);
 
         mgrsValue = "32VJH";
         expect(MGRS.isMGRS(mgrsValue)).to.be.true;
         mgrs = MGRS.parse(mgrsValue);
         point = mgrs.toPoint();
-        expect(3.0, point.getLongitude(), 0.0001);
-        expect(56.0, point.getLatitude(), 0.0001);
+        expect(point.getLongitude()).to.be.approximately(3.0, 0.0001);
+        expect(point.getLatitude()).to.be.approximately(56.0, 0.0001);
         comparePoint = MGRS.parse(mgrs.coordinate()).toPoint();
-        expect(comparePoint.getLongitude(), point.getLongitude(), 0.0001);
-        expect(comparePoint.getLatitude(), point.getLatitude(), 0.0001);
+        expect(point.getLongitude()).to.be.approximately(comparePoint.getLongitude(), 0.0001);
+        expect(point.getLatitude()).to.be.approximately(comparePoint.getLatitude(), 0.0001);
 
         mgrsValue = "38KNU";
         expect(MGRS.isMGRS(mgrsValue)).to.be.true;
         mgrs = MGRS.parse(mgrsValue);
         point = mgrs.toPoint();
-        expect(45.0, point.getLongitude(), 0.0001);
-        expect(-24.0, point.getLatitude(), 0.0001);
+        expect(point.getLongitude()).to.be.approximately(45.0, 0.0001);
+        expect(point.getLatitude()).to.be.approximately(-24.0, 0.0001);
         comparePoint = MGRS.parse(mgrs.coordinate()).toPoint();
-        expect(comparePoint.getLongitude(), point.getLongitude(), 0.0001);
-        expect(comparePoint.getLatitude(), point.getLatitude(), 0.0001);
+        expect(point.getLongitude()).to.be.approximately(comparePoint.getLongitude(), 0.0001);
+        expect(point.getLatitude()).to.be.approximately(comparePoint.getLatitude(), 0.0001);
 
         mgrsValue = "38KRU";
         expect(MGRS.isMGRS(mgrsValue)).to.be.true;
         mgrs = MGRS.parse(mgrsValue);
         point = mgrs.toPoint();
-        expect(47.9486444, point.getLongitude(), 0.0001);
-        expect(-24.0, point.getLatitude(), 0.0001);
+        expect(point.getLongitude()).to.be.approximately(47.9486444, 0.0001);
+        expect(point.getLatitude()).to.be.approximately(-24.0, 0.0001);
         comparePoint = MGRS.parse(mgrs.coordinate()).toPoint();
-        expect(comparePoint.getLongitude(), point.getLongitude(), 0.0001);
-        expect(comparePoint.getLatitude(), point.getLatitude(), 0.0001);
+        expect(point.getLongitude()).to.be.approximately(comparePoint.getLongitude(), 0.0001);
+        expect(point.getLatitude()).to.be.approximately(comparePoint.getLatitude(), 0.0001);
 
         mgrsValue = "32VPH";
         expect(MGRS.isMGRS(mgrsValue)).to.be.true;
         mgrs = MGRS.parse(mgrsValue);
         point = mgrs.toPoint();
-        expect(10.6034691, point.getLongitude(), 0.0001);
-        expect(56.0, point.getLatitude(), 0.0001);
+        expect(point.getLongitude()).to.be.approximately(10.6034691, 0.0001);
+        expect(point.getLatitude()).to.be.approximately(56.0, 0.0001);
         comparePoint = MGRS.parse(mgrs.coordinate()).toPoint();
-        expect(comparePoint.getLongitude(), point.getLongitude(), 0.0001);
-        expect(comparePoint.getLatitude(), point.getLatitude(), 0.0001);
+        expect(point.getLongitude()).to.be.approximately(comparePoint.getLongitude(), 0.0001);
+        expect(point.getLatitude()).to.be.approximately(comparePoint.getLatitude(), 0.0001);
 
     });
 
@@ -329,15 +329,14 @@ describe('MGRS Tests', function () {
             expect(MGRS.isMGRS(gzd)).to.be.true;
             let mgrs = MGRS.parse(gzd);
             expect(mgrs).to.not.be.null;
-            expect(zoneNumber, mgrs.getZone());
-            expect(bandLetter, mgrs.getBand());
+            expect(mgrs.getZone()).to.be.equal(zoneNumber);
+            expect(mgrs.getBand()).to.be.equal(bandLetter);
 
             let point = mgrs.toPoint();
             let southwest = zone.getBounds().getSouthwest();
 
-            expect(point.getLongitude(), southwest.getLongitude(),
-                0.0001);
-            expect(point.getLatitude(), southwest.getLatitude(), 0.0001);
+            expect(southwest.getLongitude()).to.be.approximately(point.getLongitude(), 0.0001);
+            expect(southwest.getLatitude()).to.be.approximately(point.getLatitude(), 0.0001);
 
         }
 
@@ -434,8 +433,8 @@ describe('MGRS Tests', function () {
 function testCoordinate(longitude: number, latitude: number, value: string,
     test100k = true): void {
     const point = Point.point(longitude, latitude);
-    testCoordinate(point, value, test100k);
-    testCoordinate(point.toMeters(), value, test100k);
+    testCoordinateByPoint(point, value, test100k);
+    testCoordinateByPoint(point.toMeters(), value, test100k);
 }
 
 /**
@@ -455,8 +454,8 @@ function testCoordinate(longitude: number, latitude: number, value: string,
 function testCoordinateMeters(longitude: number, latitude: number,
     value: string, test100k = true): void {
     const point = Point.meters(longitude, latitude);
-    testCoordinate(point, value, test100k);
-    testCoordinate(point.toDegrees(), value, test100k);
+    testCoordinateByPoint(point, value, test100k);
+    testCoordinateByPoint(point.toDegrees(), value, test100k);
 }
 
 /**
@@ -471,109 +470,101 @@ function testCoordinateMeters(longitude: number, latitude: number,
 * @throws ParseException
 *             upon failure to parse
 */
-function testCoordinate(point: Point, value: string, test100k: boolean): void {
+function testCoordinateByPoint(point: Point, value: string, test100k: boolean): void {
 
     let mgrs = MGRS.from(point);
     expect(value, mgrs.toString());
     expect(value, mgrs.coordinate());
 
     let gzd = mgrs.coordinate(GridType.GZD);
-    expect(accuracyValue(value, -1), gzd);
+    expect(gzd).to.equal(accuracyValue(value, -1));
     expect(MGRS.isMGRS(gzd)).to.be.true;
     let gzdMGRS = MGRS.parse(gzd);
-    expect(GridType.GZD, MGRS.precision(gzd));
-    expect(0, MGRS.accuracy(gzd));
-    expect(gzd, gzdMGRS.coordinate(GridType.GZD));
+    expect(MGRS.precision(gzd)).to.equal(GridType.GZD);
+    expect(MGRS.accuracy(gzd)).to.equal(0);
+    expect(gzdMGRS.coordinate(GridType.GZD)).to.equal(gzd);
 
     let hundredKilometer = mgrs.coordinate(GridType.HUNDRED_KILOMETER);
-    expect(accuracyValue(value, 0), hundredKilometer);
-    expect(hundredKilometer, mgrs.coordinate(0));
+    expect(hundredKilometer).to.equal(accuracyValue(value, 0));
+    expect(mgrs.coordinate(0)).to.equal(hundredKilometer);
     expect(MGRS.isMGRS(hundredKilometer)).to.be.true;
     let hundredKilometerMGRS = MGRS.parse(hundredKilometer);
-    expect(GridType.HUNDRED_KILOMETER,
-        MGRS.precision(hundredKilometer));
-    expect(0, MGRS.accuracy(hundredKilometer));
+    expect(MGRS.precision(hundredKilometer)).to.equal(GridType.HUNDRED_KILOMETER);
+    expect(MGRS.accuracy(hundredKilometer)).to.equal(0);
     expect(hundredKilometer,
-        hundredKilometerMGRS.coordinate(GridType.HUNDRED_KILOMETER));
+        hundredKilometerMGRS.coordinate(GridType.HUNDRED_KILOMETER)).to.equal(hundredKilometer);
     if (test100k) {
-        expect(0, hundredKilometerMGRS.getEasting());
-        expect(0, hundredKilometerMGRS.getNorthing());
-        expect(GridType.HUNDRED_KILOMETER,
-            hundredKilometerMGRS.precision());
-        expect(0, hundredKilometerMGRS.accuracy());
+        expect(hundredKilometerMGRS.getEasting()).to.equal(0);
+        expect(hundredKilometerMGRS.getNorthing()).to.equal(0);
+        expect(hundredKilometerMGRS.precision()).to.equal(GridType.HUNDRED_KILOMETER);
+        expect(hundredKilometerMGRS.accuracy()).to.equal(0);
     }
 
     let tenKilometer = mgrs.coordinate(GridType.TEN_KILOMETER);
-    expect(accuracyValue(value, 1), tenKilometer);
-    expect(tenKilometer, mgrs.coordinate(1));
+    expect(tenKilometer).to.equal(accuracyValue(value, 1));
+    expect(mgrs.coordinate(1)).to.equal(tenKilometer);
     expect(MGRS.isMGRS(tenKilometer)).to.be.true;
     let tenKilometerMGRS = MGRS.parse(tenKilometer);
-    expect(GridType.TEN_KILOMETER, MGRS.precision(tenKilometer));
-    expect(1, MGRS.accuracy(tenKilometer));
-    expect(tenKilometer,
-        tenKilometerMGRS.coordinate(GridType.TEN_KILOMETER));
-    expect(getEasting(tenKilometer, 1),
-        tenKilometerMGRS.getEasting());
-    expect(getNorthing(tenKilometer, 1),
-        tenKilometerMGRS.getNorthing());
-    expect(GridType.TEN_KILOMETER, tenKilometerMGRS.precision());
-    expect(1, tenKilometerMGRS.accuracy());
+    expect(MGRS.precision(tenKilometer)).to.equal(GridType.TEN_KILOMETER);
+    expect(MGRS.accuracy(tenKilometer)).to.equal(1);
+    expect(tenKilometerMGRS.coordinate(GridType.TEN_KILOMETER)).to.equal(tenKilometer);
+    expect(tenKilometerMGRS.getEasting()).to.equal(getEasting(tenKilometer, 1));
+    expect(tenKilometerMGRS.getNorthing()).to.equal(getNorthing(tenKilometer, 1));
+    expect(tenKilometerMGRS.precision()).to.equal(GridType.TEN_KILOMETER);
+    expect(tenKilometerMGRS.accuracy()).to.equal(1);
 
     let kilometer = mgrs.coordinate(GridType.KILOMETER);
-    expect(accuracyValue(value, 2), kilometer);
-    expect(kilometer, mgrs.coordinate(2));
+    expect(kilometer).to.equal(accuracyValue(value, 2));
+    expect(mgrs.coordinate(2)).to.equal(kilometer);
     expect(MGRS.isMGRS(kilometer)).to.be.true;
     let kilometerMGRS = MGRS.parse(kilometer);
-    expect(GridType.KILOMETER, MGRS.precision(kilometer));
-    expect(2, MGRS.accuracy(kilometer));
-    expect(kilometer, kilometerMGRS.coordinate(GridType.KILOMETER));
-    expect(getEasting(kilometer, 2), kilometerMGRS.getEasting());
-    expect(getNorthing(kilometer, 2), kilometerMGRS.getNorthing());
-    expect(GridType.KILOMETER, kilometerMGRS.precision());
-    expect(2, kilometerMGRS.accuracy());
+    expect(MGRS.precision(kilometer)).to.equal(GridType.KILOMETER);
+    expect(MGRS.accuracy(kilometer)).to.equal(2);
+    expect(kilometerMGRS.coordinate(GridType.KILOMETER)).to.equal(kilometer);
+    expect(kilometerMGRS.getEasting()).to.equal(getEasting(kilometer, 2));
+    expect(kilometerMGRS.getNorthing()).to.equal(getNorthing(kilometer, 2));
+    expect(kilometerMGRS.precision()).to.equal(GridType.KILOMETER);
+    expect(kilometerMGRS.accuracy()).to.equal(2);
 
     let hundredMeter = mgrs.coordinate(GridType.HUNDRED_METER);
-    expect(accuracyValue(value, 3), hundredMeter);
-    expect(hundredMeter, mgrs.coordinate(3));
+    expect(hundredMeter).to.equal(accuracyValue(value, 3));
+    expect(mgrs.coordinate(3)).to.equal(hundredMeter);
     expect(MGRS.isMGRS(hundredMeter)).to.be.true;
     let hundredMeterMGRS = MGRS.parse(hundredMeter);
-    expect(GridType.HUNDRED_METER, MGRS.precision(hundredMeter));
-    expect(3, MGRS.accuracy(hundredMeter));
-    expect(hundredMeter,
-        hundredMeterMGRS.coordinate(GridType.HUNDRED_METER));
-    expect(getEasting(hundredMeter, 3),
-        hundredMeterMGRS.getEasting());
-    expect(getNorthing(hundredMeter, 3),
-        hundredMeterMGRS.getNorthing());
-    expect(GridType.HUNDRED_METER, hundredMeterMGRS.precision());
-    expect(3, hundredMeterMGRS.accuracy());
+    expect(MGRS.precision(hundredMeter)).to.equal(GridType.HUNDRED_METER);
+    expect(MGRS.accuracy(hundredMeter)).to.equal(3);
+    expect(hundredMeterMGRS.coordinate(GridType.HUNDRED_METER)).to.equal(hundredMeter);
+    expect(hundredMeterMGRS.getEasting()).to.equal(getEasting(hundredMeter, 3));
+    expect(hundredMeterMGRS.getNorthing()).to.equal(getNorthing(hundredMeter, 3));
+    expect(hundredMeterMGRS.precision()).to.equal(GridType.HUNDRED_METER);
+    expect(hundredMeterMGRS.accuracy()).to.equal(3);
 
     let tenMeter = mgrs.coordinate(GridType.TEN_METER);
-    expect(accuracyValue(value, 4), tenMeter);
-    expect(tenMeter, mgrs.coordinate(4));
+    expect(tenMeter).to.equal(accuracyValue(value, 4));
+    expect(mgrs.coordinate(4)).to.equal(tenMeter);
     expect(MGRS.isMGRS(tenMeter)).to.be.true;
     let tenMeterMGRS = MGRS.parse(tenMeter);
-    expect(GridType.TEN_METER, MGRS.precision(tenMeter));
-    expect(4, MGRS.accuracy(tenMeter));
-    expect(tenMeter, tenMeterMGRS.coordinate(GridType.TEN_METER));
-    expect(getEasting(tenMeter, 4), tenMeterMGRS.getEasting());
-    expect(getNorthing(tenMeter, 4), tenMeterMGRS.getNorthing());
-    expect(GridType.TEN_METER, tenMeterMGRS.precision());
-    expect(4, tenMeterMGRS.accuracy());
+    expect(MGRS.precision(tenMeter)).to.equal(GridType.TEN_METER);
+    expect(MGRS.accuracy(tenMeter)).to.equal(4);
+    expect(tenMeterMGRS.coordinate(GridType.TEN_METER)).to.equal(tenMeter);
+    expect(tenMeterMGRS.getEasting()).to.equal(getEasting(tenMeter, 4));
+    expect(tenMeterMGRS.getNorthing()).to.equal(getNorthing(tenMeter, 4));
+    expect(tenMeterMGRS.precision()).to.equal(GridType.TEN_METER);
+    expect(tenMeterMGRS.accuracy()).to.equal(4);
 
     let meter = mgrs.coordinate(GridType.METER);
-    expect(meter, value);
-    expect(accuracyValue(value, 5), meter);
-    expect(meter, mgrs.coordinate(5));
+    expect(value).to.equal(meter);
+    expect(meter).to.equal(accuracyValue(value, 5));
+    expect(mgrs.coordinate(5)).to.equal(meter);
     expect(MGRS.isMGRS(meter)).to.be.true;
     let meterMGRS = MGRS.parse(meter);
-    expect(GridType.METER, MGRS.precision(meter));
-    expect(5, MGRS.accuracy(meter));
-    expect(meter, meterMGRS.coordinate(GridType.METER));
-    expect(getEasting(meter, 5), meterMGRS.getEasting());
-    expect(getNorthing(meter, 5), meterMGRS.getNorthing());
-    expect(GridType.METER, meterMGRS.precision());
-    expect(5, meterMGRS.accuracy());
+    expect(MGRS.precision(meter)).to.equal(GridType.METER);
+    expect(MGRS.accuracy(meter)).to.equal(5);
+    expect(meterMGRS.coordinate(GridType.METER)).to.equal(meter);
+    expect(meterMGRS.getEasting()).to.equal(getEasting(meter, 5));
+    expect(meterMGRS.getNorthing()).to.equal(getNorthing(meter, 5));
+    expect(meterMGRS.precision()).to.equal(GridType.METER);
+    expect(meterMGRS.accuracy()).to.equal(5);
 
 }
 
