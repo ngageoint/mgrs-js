@@ -95,7 +95,7 @@ export class MGRS {
       row = this.getRowLetter(zone, northing);
     }
 
-    return new MGRS(zone, band, row, column, easting, northing);
+    return new MGRS(zone, band, column, row, easting, northing);
   }
 
   /**
