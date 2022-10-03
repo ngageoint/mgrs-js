@@ -212,7 +212,6 @@ export class MGRS {
       }
     }
 
-
     return mgrs.toString();
   }
 

@@ -152,225 +152,225 @@ export class UTM {
                     ((this.easting - 500000) /
                       ((0.9996 * 6399593.625) /
                         Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) *
-                    (1 -
-                      (((0.006739496742 *
-                        Math.pow(
-                          (this.easting - 500000) /
-                          ((0.9996 * 6399593.625) /
-                            Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
-                          2,
-                        )) /
-                        2) *
-                        Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) /
-                      3),
+                      (1 -
+                        (((0.006739496742 *
+                          Math.pow(
+                            (this.easting - 500000) /
+                              ((0.9996 * 6399593.625) /
+                                Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
+                            2,
+                          )) /
+                          2) *
+                          Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) /
+                          3),
                   ) -
                     Math.exp(
                       (-(this.easting - 500000) /
                         ((0.9996 * 6399593.625) /
                           Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) *
-                      (1 -
-                        (((0.006739496742 *
-                          Math.pow(
-                            (this.easting - 500000) /
-                            ((0.9996 * 6399593.625) /
-                              Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
-                            2,
-                          )) /
-                          2) *
-                          Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) /
-                        3),
+                        (1 -
+                          (((0.006739496742 *
+                            Math.pow(
+                              (this.easting - 500000) /
+                                ((0.9996 * 6399593.625) /
+                                  Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
+                              2,
+                            )) /
+                            2) *
+                            Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) /
+                            3),
                     )) /
-                  2 /
-                  Math.cos(
-                    ((north -
-                      0.9996 *
+                    2 /
+                    Math.cos(
+                      ((north -
+                        0.9996 *
+                          6399593.625 *
+                          (north / 6366197.724 / 0.9996 -
+                            ((0.006739496742 * 3) / 4) *
+                              (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
+                            (((Math.pow((0.006739496742 * 3) / 4, 2) * 5) / 3) *
+                              (3 * (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
+                                Math.sin((2 * north) / 6366197.724 / 0.9996) *
+                                  Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
+                              4 -
+                            (((Math.pow((0.006739496742 * 3) / 4, 3) * 35) / 27) *
+                              ((5 *
+                                (3 * (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
+                                  Math.sin((2 * north) / 6366197.724 / 0.9996) *
+                                    Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
+                                4 +
+                                Math.sin((2 * north) / 6366197.724 / 0.9996) *
+                                  Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2) *
+                                  Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
+                              3)) /
+                        ((0.9996 * 6399593.625) /
+                          Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) *
+                        (1 -
+                          ((0.006739496742 *
+                            Math.pow(
+                              (this.easting - 500000) /
+                                ((0.9996 * 6399593.625) /
+                                  Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
+                              2,
+                            )) /
+                            2) *
+                            Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) +
+                        north / 6366197.724 / 0.9996,
+                    ),
+                ),
+              ) *
+                Math.tan(
+                  ((north -
+                    0.9996 *
                       6399593.625 *
                       (north / 6366197.724 / 0.9996 -
                         ((0.006739496742 * 3) / 4) *
-                        (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
+                          (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
                         (((Math.pow((0.006739496742 * 3) / 4, 2) * 5) / 3) *
                           (3 * (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
                             Math.sin((2 * north) / 6366197.724 / 0.9996) *
-                            Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
-                        4 -
+                              Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
+                          4 -
                         (((Math.pow((0.006739496742 * 3) / 4, 3) * 35) / 27) *
                           ((5 *
                             (3 * (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
                               Math.sin((2 * north) / 6366197.724 / 0.9996) *
-                              Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
+                                Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
                             4 +
                             Math.sin((2 * north) / 6366197.724 / 0.9996) *
-                            Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2) *
-                            Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
-                        3)) /
-                      ((0.9996 * 6399593.625) /
-                        Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) *
+                              Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2) *
+                              Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
+                          3)) /
+                    ((0.9996 * 6399593.625) /
+                      Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) *
                     (1 -
                       ((0.006739496742 *
                         Math.pow(
                           (this.easting - 500000) /
-                          ((0.9996 * 6399593.625) /
-                            Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
+                            ((0.9996 * 6399593.625) /
+                              Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
                           2,
                         )) /
                         2) *
-                      Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) +
+                        Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) +
                     north / 6366197.724 / 0.9996,
-                  ),
                 ),
-              ) *
-              Math.tan(
-                ((north -
-                  0.9996 *
-                  6399593.625 *
-                  (north / 6366197.724 / 0.9996 -
-                    ((0.006739496742 * 3) / 4) *
-                    (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
-                    (((Math.pow((0.006739496742 * 3) / 4, 2) * 5) / 3) *
-                      (3 * (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
-                        Math.sin((2 * north) / 6366197.724 / 0.9996) *
-                        Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
-                    4 -
-                    (((Math.pow((0.006739496742 * 3) / 4, 3) * 35) / 27) *
-                      ((5 *
-                        (3 * (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
-                          Math.sin((2 * north) / 6366197.724 / 0.9996) *
-                          Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
-                        4 +
-                        Math.sin((2 * north) / 6366197.724 / 0.9996) *
-                        Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2) *
-                        Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
-                    3)) /
-                  ((0.9996 * 6399593.625) /
-                    Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) *
-                (1 -
-                  ((0.006739496742 *
-                    Math.pow(
-                      (this.easting - 500000) /
-                      ((0.9996 * 6399593.625) /
-                        Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
-                      2,
-                    )) /
-                    2) *
-                  Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) +
-                north / 6366197.724 / 0.9996,
-              ),
             ) -
               north / 6366197.724 / 0.9996) *
             3) /
-          2) *
-        (Math.atan(
-          Math.cos(
-            Math.atan(
-              (Math.exp(
-                ((this.easting - 500000) /
-                  ((0.9996 * 6399593.625) /
-                    Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) *
-                (1 -
-                  (((0.006739496742 *
-                    Math.pow(
-                      (this.easting - 500000) /
-                      ((0.9996 * 6399593.625) /
-                        Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
-                      2,
-                    )) /
-                    2) *
-                    Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) /
-                  3),
-              ) -
-                Math.exp(
-                  (-(this.easting - 500000) /
+            2) *
+          (Math.atan(
+            Math.cos(
+              Math.atan(
+                (Math.exp(
+                  ((this.easting - 500000) /
                     ((0.9996 * 6399593.625) /
                       Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) *
+                    (1 -
+                      (((0.006739496742 *
+                        Math.pow(
+                          (this.easting - 500000) /
+                            ((0.9996 * 6399593.625) /
+                              Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
+                          2,
+                        )) /
+                        2) *
+                        Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) /
+                        3),
+                ) -
+                  Math.exp(
+                    (-(this.easting - 500000) /
+                      ((0.9996 * 6399593.625) /
+                        Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) *
+                      (1 -
+                        (((0.006739496742 *
+                          Math.pow(
+                            (this.easting - 500000) /
+                              ((0.9996 * 6399593.625) /
+                                Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
+                            2,
+                          )) /
+                          2) *
+                          Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) /
+                          3),
+                  )) /
+                  2 /
+                  Math.cos(
+                    ((north -
+                      0.9996 *
+                        6399593.625 *
+                        (north / 6366197.724 / 0.9996 -
+                          ((0.006739496742 * 3) / 4) *
+                            (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
+                          (((Math.pow((0.006739496742 * 3) / 4, 2) * 5) / 3) *
+                            (3 * (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
+                              Math.sin((2 * north) / 6366197.724 / 0.9996) *
+                                Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
+                            4 -
+                          (((Math.pow((0.006739496742 * 3) / 4, 3) * 35) / 27) *
+                            ((5 *
+                              (3 * (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
+                                Math.sin((2 * north) / 6366197.724 / 0.9996) *
+                                  Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
+                              4 +
+                              Math.sin((2 * north) / 6366197.724 / 0.9996) *
+                                Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2) *
+                                Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
+                            3)) /
+                      ((0.9996 * 6399593.625) /
+                        Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) *
+                      (1 -
+                        ((0.006739496742 *
+                          Math.pow(
+                            (this.easting - 500000) /
+                              ((0.9996 * 6399593.625) /
+                                Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
+                            2,
+                          )) /
+                          2) *
+                          Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) +
+                      north / 6366197.724 / 0.9996,
+                  ),
+              ),
+            ) *
+              Math.tan(
+                ((north -
+                  0.9996 *
+                    6399593.625 *
+                    (north / 6366197.724 / 0.9996 -
+                      ((0.006739496742 * 3) / 4) *
+                        (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
+                      (((Math.pow((0.006739496742 * 3) / 4, 2) * 5) / 3) *
+                        (3 * (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
+                          Math.sin((2 * north) / 6366197.724 / 0.9996) *
+                            Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
+                        4 -
+                      (((Math.pow((0.006739496742 * 3) / 4, 3) * 35) / 27) *
+                        ((5 *
+                          (3 * (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
+                            Math.sin((2 * north) / 6366197.724 / 0.9996) *
+                              Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
+                          4 +
+                          Math.sin((2 * north) / 6366197.724 / 0.9996) *
+                            Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2) *
+                            Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
+                        3)) /
+                  ((0.9996 * 6399593.625) /
+                    Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) *
                   (1 -
-                    (((0.006739496742 *
+                    ((0.006739496742 *
                       Math.pow(
                         (this.easting - 500000) /
-                        ((0.9996 * 6399593.625) /
-                          Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
+                          ((0.9996 * 6399593.625) /
+                            Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
                         2,
                       )) /
                       2) *
-                      Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) /
-                    3),
-                )) /
-              2 /
-              Math.cos(
-                ((north -
-                  0.9996 *
-                  6399593.625 *
-                  (north / 6366197.724 / 0.9996 -
-                    ((0.006739496742 * 3) / 4) *
-                    (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
-                    (((Math.pow((0.006739496742 * 3) / 4, 2) * 5) / 3) *
-                      (3 * (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
-                        Math.sin((2 * north) / 6366197.724 / 0.9996) *
-                        Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
-                    4 -
-                    (((Math.pow((0.006739496742 * 3) / 4, 3) * 35) / 27) *
-                      ((5 *
-                        (3 * (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
-                          Math.sin((2 * north) / 6366197.724 / 0.9996) *
-                          Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
-                        4 +
-                        Math.sin((2 * north) / 6366197.724 / 0.9996) *
-                        Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2) *
-                        Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
-                    3)) /
-                  ((0.9996 * 6399593.625) /
-                    Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) *
-                (1 -
-                  ((0.006739496742 *
-                    Math.pow(
-                      (this.easting - 500000) /
-                      ((0.9996 * 6399593.625) /
-                        Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
-                      2,
-                    )) /
-                    2) *
-                  Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) +
-                north / 6366197.724 / 0.9996,
+                      Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) +
+                  north / 6366197.724 / 0.9996,
               ),
-            ),
-          ) *
-          Math.tan(
-            ((north -
-              0.9996 *
-              6399593.625 *
-              (north / 6366197.724 / 0.9996 -
-                ((0.006739496742 * 3) / 4) *
-                (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
-                (((Math.pow((0.006739496742 * 3) / 4, 2) * 5) / 3) *
-                  (3 * (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
-                    Math.sin((2 * north) / 6366197.724 / 0.9996) *
-                    Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
-                4 -
-                (((Math.pow((0.006739496742 * 3) / 4, 3) * 35) / 27) *
-                  ((5 *
-                    (3 * (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
-                      Math.sin((2 * north) / 6366197.724 / 0.9996) *
-                      Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
-                    4 +
-                    Math.sin((2 * north) / 6366197.724 / 0.9996) *
-                    Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2) *
-                    Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
-                3)) /
-              ((0.9996 * 6399593.625) /
-                Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) *
-            (1 -
-              ((0.006739496742 *
-                Math.pow(
-                  (this.easting - 500000) /
-                  ((0.9996 * 6399593.625) /
-                    Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
-                  2,
-                )) /
-                2) *
-              Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) +
-            north / 6366197.724 / 0.9996,
-          ),
-        ) -
-          north / 6366197.724 / 0.9996)) *
+          ) -
+            north / 6366197.724 / 0.9996)) *
         180) /
       Math.PI;
     // @formatter:on
@@ -384,74 +384,74 @@ export class UTM {
           ((this.easting - 500000) /
             ((0.9996 * 6399593.625) /
               Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) *
-          (1 -
-            (((0.006739496742 *
-              Math.pow(
-                (this.easting - 500000) /
-                ((0.9996 * 6399593.625) /
-                  Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
-                2,
-              )) /
-              2) *
-              Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) /
-            3),
+            (1 -
+              (((0.006739496742 *
+                Math.pow(
+                  (this.easting - 500000) /
+                    ((0.9996 * 6399593.625) /
+                      Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
+                  2,
+                )) /
+                2) *
+                Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) /
+                3),
         ) -
           Math.exp(
             (-(this.easting - 500000) /
               ((0.9996 * 6399593.625) /
                 Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) *
-            (1 -
-              (((0.006739496742 *
-                Math.pow(
-                  (this.easting - 500000) /
-                  ((0.9996 * 6399593.625) /
-                    Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
-                  2,
-                )) /
-                2) *
-                Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) /
-              3),
+              (1 -
+                (((0.006739496742 *
+                  Math.pow(
+                    (this.easting - 500000) /
+                      ((0.9996 * 6399593.625) /
+                        Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
+                    2,
+                  )) /
+                  2) *
+                  Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) /
+                  3),
           )) /
-        2 /
-        Math.cos(
-          ((north -
-            0.9996 *
-            6399593.625 *
-            (north / 6366197.724 / 0.9996 -
-              ((0.006739496742 * 3) / 4) *
-              (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
-              (((Math.pow((0.006739496742 * 3) / 4, 2) * 5) / 3) *
-                (3 * (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
-                  Math.sin((2 * north) / 6366197.724 / 0.9996) *
-                  Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
-              4 -
-              (((Math.pow((0.006739496742 * 3) / 4, 3) * 35) / 27) *
-                ((5 *
-                  (3 * (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
-                    Math.sin((2 * north) / 6366197.724 / 0.9996) *
-                    Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
-                  4 +
-                  Math.sin((2 * north) / 6366197.724 / 0.9996) *
-                  Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2) *
-                  Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
-              3)) /
-            ((0.9996 * 6399593.625) /
-              Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) *
-          (1 -
-            ((0.006739496742 *
-              Math.pow(
-                (this.easting - 500000) /
-                ((0.9996 * 6399593.625) /
-                  Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
-                2,
-              )) /
-              2) *
-            Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) +
-          north / 6366197.724 / 0.9996,
-        ),
+          2 /
+          Math.cos(
+            ((north -
+              0.9996 *
+                6399593.625 *
+                (north / 6366197.724 / 0.9996 -
+                  ((0.006739496742 * 3) / 4) *
+                    (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
+                  (((Math.pow((0.006739496742 * 3) / 4, 2) * 5) / 3) *
+                    (3 * (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
+                      Math.sin((2 * north) / 6366197.724 / 0.9996) *
+                        Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
+                    4 -
+                  (((Math.pow((0.006739496742 * 3) / 4, 3) * 35) / 27) *
+                    ((5 *
+                      (3 * (north / 6366197.724 / 0.9996 + Math.sin((2 * north) / 6366197.724 / 0.9996) / 2) +
+                        Math.sin((2 * north) / 6366197.724 / 0.9996) *
+                          Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
+                      4 +
+                      Math.sin((2 * north) / 6366197.724 / 0.9996) *
+                        Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2) *
+                        Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))) /
+                    3)) /
+              ((0.9996 * 6399593.625) /
+                Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)))) *
+              (1 -
+                ((0.006739496742 *
+                  Math.pow(
+                    (this.easting - 500000) /
+                      ((0.9996 * 6399593.625) /
+                        Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2))),
+                    2,
+                  )) /
+                  2) *
+                  Math.pow(Math.cos(north / 6366197.724 / 0.9996), 2)) +
+              north / 6366197.724 / 0.9996,
+          ),
       ) *
         180) /
-      Math.PI +
+        Math.PI +
       this.zone * 6 -
       183;
     // @formatter:on
@@ -478,7 +478,7 @@ export class UTM {
   public format(): string {
     let value = '';
 
-    const formatter = new DecimalFormat("0.##");
+    const formatter = new DecimalFormat('0.##');
 
     value += sprintf.sprintf('%02d', this.zone);
     value += ' ';
@@ -526,7 +526,10 @@ export class UTM {
     const matches = utm.match(this.utmPattern);
 
     const zone = Number.parseInt(matches![1], 10);
-    const hemisphere = matches![2].localeCompare(GridConstants.NORTH_CHAR, undefined, { sensitivity: 'base' }) === 0 ? Hemisphere.NORTH : Hemisphere.SOUTH;
+    const hemisphere =
+      matches![2].localeCompare(GridConstants.NORTH_CHAR, undefined, { sensitivity: 'base' }) === 0
+        ? Hemisphere.NORTH
+        : Hemisphere.SOUTH;
     const easting = +matches![3];
     const northing = +matches![4];
 
@@ -563,30 +566,30 @@ export class UTM {
         Math.log(
           (1 +
             Math.cos((latitude * Math.PI) / 180) *
-            Math.sin((longitude * Math.PI) / 180 - ((6 * zone - 183) * Math.PI) / 180)) /
-          (1 -
-            Math.cos((latitude * Math.PI) / 180) *
-            Math.sin((longitude * Math.PI) / 180 - ((6 * zone - 183) * Math.PI) / 180)),
+              Math.sin((longitude * Math.PI) / 180 - ((6 * zone - 183) * Math.PI) / 180)) /
+            (1 -
+              Math.cos((latitude * Math.PI) / 180) *
+                Math.sin((longitude * Math.PI) / 180 - ((6 * zone - 183) * Math.PI) / 180)),
         ) *
         0.9996 *
         6399593.62) /
         Math.pow(1 + Math.pow(0.0820944379, 2) * Math.pow(Math.cos((latitude * Math.PI) / 180), 2), 0.5)) *
-      (1 +
-        ((Math.pow(0.0820944379, 2) / 2) *
-          Math.pow(
-            0.5 *
-            Math.log(
-              (1 +
-                Math.cos((latitude * Math.PI) / 180) *
-                Math.sin((longitude * Math.PI) / 180 - ((6 * zone - 183) * Math.PI) / 180)) /
-              (1 -
-                Math.cos((latitude * Math.PI) / 180) *
-                Math.sin((longitude * Math.PI) / 180 - ((6 * zone - 183) * Math.PI) / 180)),
-            ),
-            2,
-          ) *
-          Math.pow(Math.cos((latitude * Math.PI) / 180), 2)) /
-        3) +
+        (1 +
+          ((Math.pow(0.0820944379, 2) / 2) *
+            Math.pow(
+              0.5 *
+                Math.log(
+                  (1 +
+                    Math.cos((latitude * Math.PI) / 180) *
+                      Math.sin((longitude * Math.PI) / 180 - ((6 * zone - 183) * Math.PI) / 180)) /
+                    (1 -
+                      Math.cos((latitude * Math.PI) / 180) *
+                        Math.sin((longitude * Math.PI) / 180 - ((6 * zone - 183) * Math.PI) / 180)),
+                ),
+              2,
+            ) *
+            Math.pow(Math.cos((latitude * Math.PI) / 180), 2)) /
+            3) +
       500000;
     // @formatter:on
     easting = Math.round(easting * 100) * 0.01;
@@ -595,44 +598,44 @@ export class UTM {
     let northing =
       (((Math.atan(
         Math.tan((latitude * Math.PI) / 180) /
-        Math.cos((longitude * Math.PI) / 180 - ((6 * zone - 183) * Math.PI) / 180),
+          Math.cos((longitude * Math.PI) / 180 - ((6 * zone - 183) * Math.PI) / 180),
       ) -
         (latitude * Math.PI) / 180) *
         0.9996 *
         6399593.625) /
         Math.sqrt(1 + 0.006739496742 * Math.pow(Math.cos((latitude * Math.PI) / 180), 2))) *
-      (1 +
-        (0.006739496742 / 2) *
-        Math.pow(
-          0.5 *
-          Math.log(
-            (1 +
-              Math.cos((latitude * Math.PI) / 180) *
-              Math.sin((longitude * Math.PI) / 180 - ((6 * zone - 183) * Math.PI) / 180)) /
-            (1 -
-              Math.cos((latitude * Math.PI) / 180) *
-              Math.sin((longitude * Math.PI) / 180 - ((6 * zone - 183) * Math.PI) / 180)),
-          ),
-          2,
-        ) *
-        Math.pow(Math.cos((latitude * Math.PI) / 180), 2)) +
+        (1 +
+          (0.006739496742 / 2) *
+            Math.pow(
+              0.5 *
+                Math.log(
+                  (1 +
+                    Math.cos((latitude * Math.PI) / 180) *
+                      Math.sin((longitude * Math.PI) / 180 - ((6 * zone - 183) * Math.PI) / 180)) /
+                    (1 -
+                      Math.cos((latitude * Math.PI) / 180) *
+                        Math.sin((longitude * Math.PI) / 180 - ((6 * zone - 183) * Math.PI) / 180)),
+                ),
+              2,
+            ) *
+            Math.pow(Math.cos((latitude * Math.PI) / 180), 2)) +
       0.9996 *
-      6399593.625 *
-      ((latitude * Math.PI) / 180 -
-        0.005054622556 * ((latitude * Math.PI) / 180 + Math.sin((2 * latitude * Math.PI) / 180) / 2) +
-        (4.258201531e-5 *
-          (3 * ((latitude * Math.PI) / 180 + Math.sin((2 * latitude * Math.PI) / 180) / 2) +
-            Math.sin((2 * latitude * Math.PI) / 180) * Math.pow(Math.cos((latitude * Math.PI) / 180), 2))) /
-        4 -
-        (1.674057895e-7 *
-          ((5 *
+        6399593.625 *
+        ((latitude * Math.PI) / 180 -
+          0.005054622556 * ((latitude * Math.PI) / 180 + Math.sin((2 * latitude * Math.PI) / 180) / 2) +
+          (4.258201531e-5 *
             (3 * ((latitude * Math.PI) / 180 + Math.sin((2 * latitude * Math.PI) / 180) / 2) +
               Math.sin((2 * latitude * Math.PI) / 180) * Math.pow(Math.cos((latitude * Math.PI) / 180), 2))) /
-            4 +
-            Math.sin((2 * latitude * Math.PI) / 180) *
-            Math.pow(Math.cos((latitude * Math.PI) / 180), 2) *
-            Math.pow(Math.cos((latitude * Math.PI) / 180), 2))) /
-        3);
+            4 -
+          (1.674057895e-7 *
+            ((5 *
+              (3 * ((latitude * Math.PI) / 180 + Math.sin((2 * latitude * Math.PI) / 180) / 2) +
+                Math.sin((2 * latitude * Math.PI) / 180) * Math.pow(Math.cos((latitude * Math.PI) / 180), 2))) /
+              4 +
+              Math.sin((2 * latitude * Math.PI) / 180) *
+                Math.pow(Math.cos((latitude * Math.PI) / 180), 2) *
+                Math.pow(Math.cos((latitude * Math.PI) / 180), 2))) /
+            3);
     // @formatter:on
 
     if (hemisphere === Hemisphere.SOUTH) {
