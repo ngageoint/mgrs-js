@@ -386,7 +386,7 @@ export class MGRS {
    * @return value without spaces
    */
   private static removeSpaces(value: string): string {
-    return value.replace('\\s', '');
+    return value.replace(/\s/g,'');
   }
 
   /**
