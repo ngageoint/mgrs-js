@@ -486,7 +486,7 @@ function testCoordinateByPoint(point: Point, value: string, test100k: boolean): 
 
     let hundredKilometer = mgrs.coordinate(GridType.HUNDRED_KILOMETER);
     expect(hundredKilometer).to.equal(accuracyValue(value, 0));
-    expect(mgrs.coordinate(0)).to.equal(hundredKilometer);
+    expect(mgrs.coordinateFromAccuracy(0)).to.equal(hundredKilometer);
     expect(MGRS.isMGRS(hundredKilometer)).to.be.true;
     let hundredKilometerMGRS = MGRS.parse(hundredKilometer);
     expect(MGRS.precision(hundredKilometer)).to.equal(GridType.HUNDRED_KILOMETER);
@@ -502,7 +502,7 @@ function testCoordinateByPoint(point: Point, value: string, test100k: boolean): 
 
     let tenKilometer = mgrs.coordinate(GridType.TEN_KILOMETER);
     expect(tenKilometer).to.equal(accuracyValue(value, 1));
-    expect(mgrs.coordinate(1)).to.equal(tenKilometer);
+    expect(mgrs.coordinateFromAccuracy(1)).to.equal(tenKilometer);
     expect(MGRS.isMGRS(tenKilometer)).to.be.true;
     let tenKilometerMGRS = MGRS.parse(tenKilometer);
     expect(MGRS.precision(tenKilometer)).to.equal(GridType.TEN_KILOMETER);
@@ -515,7 +515,7 @@ function testCoordinateByPoint(point: Point, value: string, test100k: boolean): 
 
     let kilometer = mgrs.coordinate(GridType.KILOMETER);
     expect(kilometer).to.equal(accuracyValue(value, 2));
-    expect(mgrs.coordinate(2)).to.equal(kilometer);
+    expect(mgrs.coordinateFromAccuracy(2)).to.equal(kilometer);
     expect(MGRS.isMGRS(kilometer)).to.be.true;
     let kilometerMGRS = MGRS.parse(kilometer);
     expect(MGRS.precision(kilometer)).to.equal(GridType.KILOMETER);
@@ -528,7 +528,7 @@ function testCoordinateByPoint(point: Point, value: string, test100k: boolean): 
 
     let hundredMeter = mgrs.coordinate(GridType.HUNDRED_METER);
     expect(hundredMeter).to.equal(accuracyValue(value, 3));
-    expect(mgrs.coordinate(3)).to.equal(hundredMeter);
+    expect(mgrs.coordinateFromAccuracy(3)).to.equal(hundredMeter);
     expect(MGRS.isMGRS(hundredMeter)).to.be.true;
     let hundredMeterMGRS = MGRS.parse(hundredMeter);
     expect(MGRS.precision(hundredMeter)).to.equal(GridType.HUNDRED_METER);
@@ -541,7 +541,7 @@ function testCoordinateByPoint(point: Point, value: string, test100k: boolean): 
 
     let tenMeter = mgrs.coordinate(GridType.TEN_METER);
     expect(tenMeter).to.equal(accuracyValue(value, 4));
-    expect(mgrs.coordinate(4)).to.equal(tenMeter);
+    expect(mgrs.coordinateFromAccuracy(4)).to.equal(tenMeter);
     expect(MGRS.isMGRS(tenMeter)).to.be.true;
     let tenMeterMGRS = MGRS.parse(tenMeter);
     expect(MGRS.precision(tenMeter)).to.equal(GridType.TEN_METER);
@@ -555,7 +555,7 @@ function testCoordinateByPoint(point: Point, value: string, test100k: boolean): 
     let meter = mgrs.coordinate();
     expect(value).to.equal(meter);
     expect(meter).to.equal(accuracyValue(value, 5));
-    expect(mgrs.coordinate(5)).to.equal(meter);
+    expect(mgrs.coordinateFromAccuracy(5)).to.equal(meter);
     expect(MGRS.isMGRS(meter)).to.be.true;
     let meterMGRS = MGRS.parse(meter);
     expect(MGRS.precision(meter)).to.equal(GridType.METER);

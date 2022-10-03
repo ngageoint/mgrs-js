@@ -196,7 +196,7 @@ export class MGRS {
   public coordinate(type?: GridType): string {
     let mgrs = '';
 
-    if (!type) {
+    if (type === null || type === undefined) {
       type = GridType.METER;
     }
 
