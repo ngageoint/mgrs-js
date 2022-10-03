@@ -363,7 +363,7 @@ export class MGRS {
    * {@inheritDoc}
    */
   public toString(): string {
-    return this.coordinate();
+    return this.coordinate(GridType.METER);
   }
 
   /**
