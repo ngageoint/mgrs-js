@@ -196,19 +196,22 @@ export class MGRS {
   public coordinate(type?: GridType): string {
     let mgrs = '';
 
-    if (type) {
-      mgrs += this.zone;
-      mgrs += this.band;
+    if (!type) {
+      type = GridType.METER;
+    }
 
-      if (type.valueOf() !== GridType.GZD.valueOf()) {
-        mgrs += this.column;
-        mgrs += this.row;
+    mgrs += this.zone;
+    mgrs += this.band;
 
-        if (type !== GridType.HUNDRED_KILOMETER) {
-          mgrs += this.getEastingAndNorthing(type);
-        }
+    if (type.valueOf() !== GridType.GZD.valueOf()) {
+      mgrs += this.column;
+      mgrs += this.row;
+
+      if (type !== GridType.HUNDRED_KILOMETER) {
+        mgrs += this.getEastingAndNorthing(type);
       }
     }
+
 
     return mgrs.toString();
   }
@@ -386,7 +389,7 @@ export class MGRS {
    * @return value without spaces
    */
   private static removeSpaces(value: string): string {
-    return value.replace(/\s/g,'');
+    return value.replace(/\s/g, '');
   }
 
   /**
