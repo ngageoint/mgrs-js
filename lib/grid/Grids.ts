@@ -27,7 +27,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
    *            grid types to enable
    * @return grids
    */
-  public static create(types: GridType[]): Grids {
+  public static create(types?: GridType[]): Grids {
     return new Grids(types);
   }
 
@@ -46,7 +46,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
    * @param types
    *            grid types to enable
    */
-  constructor(types: GridType[]) {
+  constructor(types?: GridType[]) {
     super(MGRSProperties.getInstance());
 
     if (types) {

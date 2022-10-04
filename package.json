@@ -59,7 +59,7 @@
         "lint:prettier": "prettier --check \"lib/**/*.ts\" \"test/**/*.ts\"",
         "lint:tslint": "tslint -p tsconfig.json",
         "lint": "npm run lint:tslint && npm run lint:prettier",
-        "fix:prettier": "npm lint:prettier --write",
+        "fix:prettier": "prettier --write \"lib/**/*.ts\" \"test/**/*.ts\"",
         "prebuild": "npm run clean",
         "pretest": "npm run build",
         "prepublishOnly": "npm run build && npm run lint"

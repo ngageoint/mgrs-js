@@ -19,3 +19,74 @@ Software source code previously released under an open source license and then m
 [![NPM](https://img.shields.io/npm/v/@ngageoint/mgrs-js.svg)](https://www.npmjs.com/package/@ngageoint/mgrs-js)
 [![Coverage Status](https://coveralls.io/repos/github/ngageoint/mgrs-js/badge.svg)](https://coveralls.io/github/ngageoint/mgrs-js)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
+#### Coordinates ####
+
+```javascript
+    const mgrs = MGRS.parse('33XVG74594359');
+    const point = mgrs.toPoint();
+    const pointMeters = point.toMeters();
+    const utm = mgrs.toUTM();
+    const utmCoordinate = utm.toString();
+    const point2 = utm.toPoint();
+
+    const mgrs2 = MGRS.parse('33X VG 74596 43594');
+
+    const latitude = 63.98862388;
+    const longitude = 29.06755082;
+    const point3 = Point.point(longitude, latitude);
+    const mgrs3 = MGRS.from(point3);
+    const mgrsCoordinate = mgrs3.toString();
+    const mgrsGZD = mgrs3.coordinate(GridType.GZD);
+    const mgrs100k = mgrs3.coordinate(GridType.HUNDRED_KILOMETER);
+    const mgrs10k = mgrs3.coordinate(GridType.TEN_KILOMETER);
+    const mgrs1k = mgrs3.coordinate(GridType.KILOMETER);
+    const mgrs100m = mgrs3.coordinate(GridType.HUNDRED_METER);
+    const mgrs10m = mgrs3.coordinate(GridType.TEN_METER);
+    const mgrs1m = mgrs3.coordinate(GridType.METER);
+
+    const utm2 = UTM.from(point3);
+    const mgrs4 = utm2.toMGRS();
+
+    const utm3 = UTM.parse('18 N 585628 4511322');
+    const mgrs5 = utm3.toMGRS();
+```
+
+#### Draw Tile Template ####
+
+See [mgrs-android](https://github.com/ngageoint/mgrs-android) for a concrete example
+
+```javascript
+ // GridTile tile = ...;
+
+  const grids = Grids.create();
+
+  const zoomGrids = grids.getGrids(tile.getZoom());
+  if (zoomGrids && zoomGrids.hasGrids()) {
+    const gridRange = GridZones.getGridRange(tile.getBounds()!);
+
+    for (const grid of zoomGrids) {
+      // draw this grid for each zone
+      for (const zone of gridRange) {
+        const lines = grid.getLinesFromGridTile(tile, zone);
+        if (lines) {
+          const pixelRange = zone.getBounds().getPixelRangeFromTile(tile);
+          for (const line of lines) {
+            const pixel1 = line.getPoint1().getPixelFromTile(tile);
+            const pixel2 = line.getPoint2().getPixelFromTile(tile);
+            // Draw line
+          }
+        }
+
+        const labels = grid.getLabelsFromGridTile(tile, zone);
+        if (labels) {
+          for (const label of labels) {
+            const pixelRange = label.getBounds()?.getPixelRangeFromTile(tile);
+            const centerPixel = label.getCenter()?.getPixelFromTile(tile);
+            // Draw label
+          }
+        }
+      }
+    }
+  }
+```
