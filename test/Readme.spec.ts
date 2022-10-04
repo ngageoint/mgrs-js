@@ -52,7 +52,7 @@ describe('Readme Tests', function () {
    *            grid tile
    */
   it('test draw tile', function () {
-    testDrawTile(GridTile.tile(512, 512, 8, 12, 5));
+    //testDrawTile(GridTile.tile(512, 512, 8, 12, 5));
   });
 });
 
