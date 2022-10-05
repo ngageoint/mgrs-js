@@ -32,3 +32,11 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         path-to-lcov: ./docs/coverage/lcov.info
+
+    - name: Prettify code
+      uses: creyD/prettier_action@v4.2
+      if: github.ref_name == 'master'
+      with:
+        prettier_options: --write \"lib/**/*.ts\" \"test/**/*.ts\""
+        only_changed: True
+        github_token: ${{ secrets.GITHUB_TOKEN }}
