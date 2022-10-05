@@ -82,14 +82,14 @@ export class Grid extends BaseGrid {
    */
   public getStyle(gridType?: GridType): GridStyle {
     let style: GridStyle | undefined;
-    if(gridType) {
+    if (gridType) {
       if (gridType === this.type) {
         style = this.getStyle();
       } else {
         style = this.styles.get(gridType);
       }
     }
-   
+
     return style!;
   }
 
@@ -118,7 +118,7 @@ export class Grid extends BaseGrid {
    *            grid line style
    */
   public setStyle(style: GridStyle, gridType?: GridType): void {
-    if(gridType) {
+    if (gridType) {
       if (gridType < this.getPrecision()) {
         throw new Error(
           'Grid can not define a style for a higher precision grid type. Type: ' +
@@ -170,7 +170,7 @@ export class Grid extends BaseGrid {
    *            grid line color
    */
   public setColor(color: Color, gridType?: GridType): void {
-    if(gridType) {
+    if (gridType) {
       this.getOrCreateStyle(gridType).setColor(color);
     }
   }
