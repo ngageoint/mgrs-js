@@ -221,7 +221,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
 
     if (color || width) {
       const style = this.getGridStyle(grid, color, width);
-      grid.setStyleWithGridType(gridType, style);
+      grid.setStyle(style, gridType);
 
       if (styles) {
         styles.set(gridType, style);
@@ -452,7 +452,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
     if (precisionTypes) {
       for (const precisionType of precisionTypes) {
         for (const type of types) {
-          this.getGrid(type)!.setColorWithGridType(precisionType, color);
+          this.getGrid(type)!.setColor(color, precisionType);
         }
       }
     } else {

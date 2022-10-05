@@ -80,13 +80,16 @@ export class Grid extends BaseGrid {
    *            grid type
    * @return grid type line style
    */
-  public getStyleFromGridType(gridType: GridType): GridStyle {
+  public getStyle(gridType?: GridType): GridStyle {
     let style: GridStyle | undefined;
-    if (gridType === this.type) {
-      style = this.getStyle();
-    } else {
-      style = this.styles.get(gridType);
+    if(gridType) {
+      if (gridType === this.type) {
+        style = this.getStyle();
+      } else {
+        style = this.styles.get(gridType);
+      }
     }
+   
     return style!;
   }
 
@@ -98,10 +101,10 @@ export class Grid extends BaseGrid {
    * @return grid type line style
    */
   private getOrCreateStyle(gridType: GridType): GridStyle {
-    let style = this.getStyleFromGridType(gridType);
+    let style = this.getStyle(gridType);
     if (!style) {
       style = new GridStyle(undefined, 0);
-      this.setStyleWithGridType(gridType, style);
+      this.setStyle(style, gridType);
     }
     return style;
   }
@@ -114,19 +117,21 @@ export class Grid extends BaseGrid {
    * @param style
    *            grid line style
    */
-  public setStyleWithGridType(gridType: GridType, style: GridStyle): void {
-    if (gridType < this.getPrecision()) {
-      throw new Error(
-        'Grid can not define a style for a higher precision grid type. Type: ' +
-          this.type +
-          ', Style Type: ' +
-          gridType,
-      );
-    }
-    if (gridType === this.type) {
-      this.setStyle(style);
-    } else {
-      this.styles.set(gridType, style != null ? style : new GridStyle(undefined, 0));
+  public setStyle(style: GridStyle, gridType?: GridType): void {
+    if(gridType) {
+      if (gridType < this.getPrecision()) {
+        throw new Error(
+          'Grid can not define a style for a higher precision grid type. Type: ' +
+            this.type +
+            ', Style Type: ' +
+            gridType,
+        );
+      }
+      if (gridType === this.type) {
+        this.setStyle(style);
+      } else {
+        this.styles.set(gridType, style != null ? style : new GridStyle(undefined, 0));
+      }
     }
   }
 
@@ -146,7 +151,7 @@ export class Grid extends BaseGrid {
    */
   public getColorFromGridType(gridType: GridType): Color {
     let color: Color | undefined;
-    const style = this.getStyleFromGridType(gridType);
+    const style = this.getStyle(gridType);
     if (style) {
       color = style.getColor();
     }
@@ -164,8 +169,10 @@ export class Grid extends BaseGrid {
    * @param color
    *            grid line color
    */
-  public setColorWithGridType(gridType: GridType, color: Color): void {
-    this.getOrCreateStyle(gridType).setColor(color);
+  public setColor(color: Color, gridType?: GridType): void {
+    if(gridType) {
+      this.getOrCreateStyle(gridType).setColor(color);
+    }
   }
 
   /**
@@ -177,7 +184,7 @@ export class Grid extends BaseGrid {
    */
   public getWidthFromGridType(gridType: GridType): number {
     let width = 0;
-    const style = this.getStyleFromGridType(gridType);
+    const style = this.getStyle(gridType);
     if (style) {
       width = style.getWidth();
     }
