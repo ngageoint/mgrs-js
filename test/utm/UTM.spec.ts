@@ -10,9 +10,10 @@ describe('UTM Tests', function () {
   });
 
   it('test from point', function () {
-    const point = Point.point(0, 0);
-    const utm = UTM.from(point);
-    expect(utm).to.not.be.undefined;
+    const utm = UTM.create(0, Hemisphere.NORTH, 0, 0);
+    const point = utm.toPoint();
+    const from = UTM.from(point, utm.getZone(), utm.getHemisphere());
+    expect(utm.toString() === from.toString()).to.be.true;
   });
 
   it('test is UTM', function () {
@@ -20,5 +21,12 @@ describe('UTM Tests', function () {
 
     expect(UTM.isUTM(utm.toString())).to.be.true;
     expect(UTM.isUTM('not utm')).to.be.false;
+  });
+
+  it('test parse', function () {
+    const utm = UTM.create(0, Hemisphere.NORTH, 0, 0);
+    const parsed = UTM.parse(utm.toString());
+
+    expect(utm.toString() === parsed.toString()).to.be.true;
   });
 });
