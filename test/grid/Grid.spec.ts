@@ -18,9 +18,17 @@ describe('Grid Tests', function () {
     }).to.throw(Error);
   });
 
-  it('test equals', function () {
+  it('test compare', function () {
     const grid = new Grid(GridType.METER);
-    const grid2 = new Grid(GridType.METER);
+    let grid2 = new Grid(GridType.METER);
     expect(grid.equals(grid2)).to.be.true;
+
+    grid2 = new Grid(GridType.KILOMETER);
+    expect(grid.less(grid2)).to.be.true;
+
+    const grid3 = new Grid(GridType.TEN_KILOMETER);
+    expect(grid2.less(grid3)).to.be.true;
+
+    expect(grid3.less(grid)).to.be.false;
   });
 });
