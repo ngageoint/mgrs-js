@@ -78,4 +78,13 @@ export class GridTypeUtils {
 
     return ordinal;
   }
+
+  public static hashCode(type: GridType): number {
+    let h: number = 0;
+    const str = type.toString();
+    for (var i = 0; i < str.length; i++) {
+        h = 31 * h + str.charCodeAt(i);
+    }
+    return h & 0xFFFFFFFF
+}
 }
