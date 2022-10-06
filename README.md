@@ -1,4 +1,4 @@
-# MGRS Javascrript
+# MGRS Javascript
 
 #### Military Grid Reference System Lib ####
 
