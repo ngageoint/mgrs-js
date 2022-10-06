@@ -1,8 +1,8 @@
 /**
  * Grid type enumeration
  *
- * @author wnewman
- * @author osbornb
+ *
+ *
  */
 export enum GridType {
   /**

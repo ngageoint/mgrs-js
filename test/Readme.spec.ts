@@ -8,7 +8,7 @@ import { GridZones } from '../lib/gzd/GridZones';
 /**
  * README example tests
  *
- * @author osbornb
+ *
  */
 describe('Readme Tests', function () {
   /**

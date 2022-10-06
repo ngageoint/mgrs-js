@@ -5,7 +5,7 @@ import { GridTypeUtils } from '../../lib/grid/GridTypeUtils';
 /**
  * Grid Type Test
  *
- * @author osbornb
+ *
  */
 describe('GridType Tests', function () {
   /**

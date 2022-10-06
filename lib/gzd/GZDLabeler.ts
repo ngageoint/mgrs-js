@@ -9,7 +9,7 @@ import { GridZone } from './GridZone';
 /**
  * Grid Zone Designator labeler
  *
- * @author osbornb
+ *
  */
 export class GZDLabeler extends GridLabeler {
   constructor(enabled: boolean, minZoom = 0, maxZoom?: number, color?: Color, textSize?: number, buffer?: number) {

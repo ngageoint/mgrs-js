@@ -10,8 +10,8 @@ import { LongitudinalStrip } from './LongitudinalStrip';
 /**
  * Grid Zone
  *
- * @author wnewman
- * @author osbornb
+ *
+ *
  */
 export class GridZone {
   /**

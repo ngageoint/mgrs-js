@@ -7,8 +7,8 @@ import { MGRS } from '../MGRS';
 /**
  * Universal Transverse Mercator Projection
  *
- * @author wnewman
- * @author osbornb
+ *
+ *
  */
 export class UTM {
   /**

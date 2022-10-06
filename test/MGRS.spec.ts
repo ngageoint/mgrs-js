@@ -8,7 +8,7 @@ import { GridRange } from '../lib/gzd/GridRange';
 /**
  * MGRS Test
  *
- * @author osbornb
+ *
  */
 describe('MGRS Tests', function () {
   /**

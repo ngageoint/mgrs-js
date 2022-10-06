@@ -12,8 +12,8 @@ import { ZoneNumberRange } from './ZoneNumberRange';
 /**
  * Grid Zones, Longitudinal Strips, and Latitude Bands
  *
- * @author wnewman
- * @author osbornb
+ *
+ *
  */
 export class GridZones {
   /**

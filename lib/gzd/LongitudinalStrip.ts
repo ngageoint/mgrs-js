@@ -1,7 +1,7 @@
 /**
  * Longitudinal (vertical) strip
  *
- * @author osbornb
+ *
  */
 export class LongitudinalStrip {
   /**

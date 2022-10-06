@@ -3,7 +3,7 @@ import { GridProperties } from '@ngageoint/grid-js';
 /**
  * MGRS property loader
  *
- * @author osbornb
+ *
  */
 export class MGRSProperties extends GridProperties {
   /**

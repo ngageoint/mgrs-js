@@ -5,8 +5,8 @@ import { GridType } from './GridType';
 /**
  * MGRS Grid Label
  *
- * @author wnewman
- * @author osbornb
+ *
+ *
  */
 export class GridLabel extends Label {
   /**
