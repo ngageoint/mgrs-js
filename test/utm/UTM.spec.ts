@@ -14,4 +14,11 @@ describe('UTM Tests', function () {
     const utm = UTM.from(point);
     expect(utm).to.not.be.undefined;
   });
+
+  it('test is UTM', function () {
+    const utm = UTM.create(0, Hemisphere.NORTH, 0, 0);
+    
+    expect(UTM.isUTM(utm.toString())).to.be.true;
+    expect(UTM.isUTM('not utm')).to.be.false;
+  });
 });
