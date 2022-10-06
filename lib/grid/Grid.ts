@@ -15,7 +15,7 @@ import { GridTypeUtils } from './GridTypeUtils';
  * @author wnewman
  * @author osbornb
  */
-export class Grid extends BaseGrid implements IComparable<Grid>{
+export class Grid extends BaseGrid implements IComparable<Grid> {
   /**
    * Default line width
    */
@@ -325,11 +325,11 @@ export class Grid extends BaseGrid implements IComparable<Grid>{
   }
 
   public hashCode(): number {
-		const prime = 31;
-		let result = 1;
-		result = prime * result + ((!this.type) ? 0 : GridTypeUtils.hashCode(this.type));
-		return result;
-	}
+    const prime = 31;
+    let result = 1;
+    result = prime * result + (!this.type ? 0 : GridTypeUtils.hashCode(this.type));
+    return result;
+  }
 
   public equals(obj: any): boolean {
     if (this === obj) return true;
