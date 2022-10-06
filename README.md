@@ -90,3 +90,7 @@ See [mgrs-android](https://github.com/ngageoint/mgrs-android) for a concrete exa
     }
   }
 ```
+
+### Remote Dependencies ###
+
+* [Grid Javascript](https://github.com/ngageoint/grid-js) (The MIT License (MIT)) - Grid Library
