@@ -1,4 +1,4 @@
-# MGRS Java
+# MGRS Javascrript
 
 #### Military Grid Reference System Lib ####
 
@@ -11,7 +11,7 @@ Software source code previously released under an open source license and then m
 
 ### About ###
 
-[MGRS](http://ngageoint.github.io/mgrs-js/) is a Java library providing Military Grid Reference System functionality, a geocoordinate standard used by NATO militaries for locating points on Earth.
+[MGRS](http://ngageoint.github.io/mgrs-js/) is a Javascript library providing Military Grid Reference System functionality, a geocoordinate standard used by NATO militaries for locating points on Earth.
 
 ### Build and Installation ###
 
