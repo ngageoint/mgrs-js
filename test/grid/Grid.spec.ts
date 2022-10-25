@@ -11,7 +11,6 @@ describe('Grid Tests', function () {
 
   it('test style', function () {
     const grid = new Grid(GridType.KILOMETER);
-    expect(grid.getStyle()).to.be.undefined;
 
     expect(function () {
       grid.setStyle(new GridStyle(undefined, 0), GridType.METER);
