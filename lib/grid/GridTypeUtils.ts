@@ -55,9 +55,10 @@ export class GridTypeUtils {
 
   public static values(): GridType[] {
     const gridTypes: GridType[] = [];
-    for (const type of Object.values(GridType)) {
+    const values = Object.keys(GridType).map((key: any) => GridType[key]);
+    for (const type of values) {
       if (Number.isInteger(type)) {
-        gridTypes.push(type as number);
+        gridTypes.push(type as unknown as number);
       }
     }
     return gridTypes;

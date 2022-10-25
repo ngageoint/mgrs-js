@@ -22,14 +22,14 @@
     ],
     "homepage": "https://www.nga.mil",
     "engines": {
-        "npm": ">= 8.x"
+        "npm": ">= 6.x"
     },
     "license": "MIT",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "dependencies": {
         "@ngageoint/color-js": "^2.1.0",
-        "@ngageoint/grid-js": "^1.2.0",
+        "@ngageoint/grid-js": "^2.0.0",
         "decimal-format": "^3.0.0",
         "sprintf-js": "^1.1.2",
         "tstl": "^2.5.8"

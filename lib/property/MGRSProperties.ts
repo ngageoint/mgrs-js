@@ -1,20 +1,14 @@
 import { GridProperties } from '@ngageoint/grid-js';
+import * as config from '../../resources/mgrs.json';
 
 /**
  * MGRS property loader
- *
- *
  */
 export class MGRSProperties extends GridProperties {
   /**
-   * Property file name
-   */
-  public static readonly PROPERTIES_FILE = './resources/mgrs.properties';
-
-  /**
    * Singleton instance
    */
-  public static instance = new MGRSProperties();
+  public static instance = new MGRSProperties(config);
 
   /**
    * Get the singleton instance
@@ -23,12 +17,5 @@ export class MGRSProperties extends GridProperties {
    */
   public static getInstance(): MGRSProperties {
     return MGRSProperties.instance;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public getFile(): string {
-    return MGRSProperties.PROPERTIES_FILE;
   }
 }
