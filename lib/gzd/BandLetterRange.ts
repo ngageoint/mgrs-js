@@ -4,8 +4,6 @@ import { GridZones } from './GridZones';
 
 /**
  * Band Letter Range
- *
- *
  */
 export class BandLetterRange implements IterableIterator<string> {
   /**

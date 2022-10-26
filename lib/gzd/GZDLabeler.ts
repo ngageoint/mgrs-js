@@ -1,5 +1,4 @@
 import { Color } from '@ngageoint/color-js';
-import { Bounds } from '@ngageoint/grid-js';
 import { GridLabel } from '../grid/GridLabel';
 import { GridLabeler } from '../grid/GridLabeler';
 import { GridType } from '../grid/GridType';
@@ -8,8 +7,6 @@ import { GridZone } from './GridZone';
 
 /**
  * Grid Zone Designator labeler
- *
- *
  */
 export class GZDLabeler extends GridLabeler {
   constructor(enabled: boolean, minZoom = 0, maxZoom?: number, color?: Color, textSize?: number, buffer?: number) {

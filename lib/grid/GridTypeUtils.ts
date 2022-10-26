@@ -1,4 +1,3 @@
-import { Grid } from './Grid';
 import { GridType } from './GridType';
 
 export class GridTypeUtils {

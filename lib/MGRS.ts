@@ -9,9 +9,6 @@ import { MGRSUtils } from './MGRSUtils';
 
 /**
  * Military Grid Reference System Coordinate
- *
- *
- *
  */
 export class MGRS {
   /**

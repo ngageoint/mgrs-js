@@ -6,9 +6,6 @@ import { MGRS } from '../MGRS';
 
 /**
  * Universal Transverse Mercator Projection
- *
- *
- *
  */
 export class UTM {
   /**

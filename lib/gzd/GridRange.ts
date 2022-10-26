@@ -7,8 +7,6 @@ import { ZoneNumberRange } from './ZoneNumberRange';
 
 /**
  * Grid Range
- *
- *
  */
 export class GridRange implements IterableIterator<GridZone> {
   /**

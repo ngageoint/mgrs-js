@@ -3,9 +3,6 @@ import { MGRSConstants } from './MGRSConstants';
 
 /**
  * Military Grid Reference System utilities
- *
- *
- *
  */
 export class MGRSUtils {
   /**

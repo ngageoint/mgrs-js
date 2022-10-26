@@ -2,8 +2,6 @@ import { GridConstants } from '@ngageoint/grid-js';
 
 /**
  * Military Grid Reference System Constants
- *
- *
  */
 export class MGRSConstants {
   /**

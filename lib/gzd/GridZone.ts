@@ -9,9 +9,6 @@ import { LongitudinalStrip } from './LongitudinalStrip';
 
 /**
  * Grid Zone
- *
- *
- *
  */
 export class GridZone {
   /**

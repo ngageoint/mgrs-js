@@ -11,8 +11,6 @@ import { ZoomGrids } from './ZoomGrids';
 
 /**
  * Grids
- *
- *
  */
 export class Grids extends BaseGrids<Grid, ZoomGrids> {
   /**

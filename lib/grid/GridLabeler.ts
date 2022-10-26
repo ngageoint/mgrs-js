@@ -7,8 +7,6 @@ import { GridType } from './GridType';
 
 /**
  * Grid Labeler
- *
- *
  */
 export abstract class GridLabeler extends Labeler {
   /**

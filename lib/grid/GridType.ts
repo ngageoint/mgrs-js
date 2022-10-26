@@ -1,8 +1,5 @@
 /**
  * Grid type enumeration
- *
- *
- *
  */
 export enum GridType {
   /**
