@@ -30,4 +30,10 @@ describe('Grid Tests', function () {
 
     expect(grid3.less(grid)).to.be.false;
   });
+
+  it('test type', function () {
+    const grid = new Grid(GridType.GZD);
+    expect(grid.isType(GridType.GZD)).to.be.true;
+    expect(grid.isType(GridType.METER)).to.be.false;
+  });
 });
