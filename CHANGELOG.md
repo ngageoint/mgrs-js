@@ -9,6 +9,6 @@ Adheres to [Semantic Versioning](http://semver.org/).
 * TBD
 
 
-## [1.0.0](https://github.com/ngageoint/mgrs-js/releases/tag/1.0.0) (TBD)
+## [1.0.0](https://github.com/ngageoint/mgrs-js/releases/tag/1.0.0) (11/27/2022)
 
 * Initial Release (port of mgrs-java 2.1.0)
