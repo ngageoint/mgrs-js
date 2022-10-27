@@ -195,7 +195,7 @@ export class GridRange implements IterableIterator<GridZone> {
       };
   }
 
-  public reset():void {
+  public reset(): void {
     this.zoneNumber = this.minZoneNumber;
     this.bandLetter = this.minBandLetter;
   }
