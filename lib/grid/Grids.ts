@@ -11,8 +11,6 @@ import { ZoomGrids } from './ZoomGrids';
 
 /**
  * Grids
- *
- * @author osbornb
  */
 export class Grids extends BaseGrids<Grid, ZoomGrids> {
   /**
@@ -27,7 +25,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
    *            grid types to enable
    * @return grids
    */
-  public static create(types: GridType[]): Grids {
+  public static create(types?: GridType[]): Grids {
     return new Grids(types);
   }
 
@@ -46,10 +44,10 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
    * @param types
    *            grid types to enable
    */
-  constructor(types: GridType[]) {
+  constructor(types?: GridType[]) {
     super(MGRSProperties.getInstance());
 
-    if (types) {
+    if (types && types.length > 0) {
       this.createGrids(false);
       for (const type of types) {
         const grid = this.getGrid(type);
@@ -58,7 +56,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
         }
       }
     } else {
-      this.createGrids(undefined);
+      this.createGrids();
     }
 
     this.createZoomGrids();
@@ -109,13 +107,9 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
    *            enable created grids
    */
   private createGrids(enabled?: boolean): void {
-    const propagate = this.properties.getBooleanProperty(
-      false,
-      PropertyConstants.GRIDS.toString(),
-      PropertyConstants.PROPAGATE.toString(),
-    );
+    const propagate = this.properties.getBooleanProperty(false, PropertyConstants.GRIDS, PropertyConstants.PROPAGATE);
     let styles: Map<GridType, GridStyle> | undefined;
-    if (propagate) {
+    if (propagate !== undefined && propagate !== null && propagate) {
       styles = new Map<GridType, GridStyle>();
     }
 
@@ -204,7 +198,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
     let color = this.loadGridStyleColor(gridKey, gridKey2);
     let width = this.loadGridStyleWidth(gridKey, gridKey2);
 
-    if ((!color || !width) && styles) {
+    if ((!color || width === undefined || width === null) && styles) {
       const style = styles.get(gridType);
       if (style) {
         if (!color) {
@@ -213,15 +207,15 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
             color = styleColor.copy();
           }
         }
-        if (!width) {
+        if (width === null || width === undefined) {
           width = style.getWidth();
         }
       }
     }
 
-    if (color || width) {
+    if (color || (width !== null && width !== undefined)) {
       const style = this.getGridStyle(grid, color, width);
-      grid.setStyleWithGridType(gridType, style);
+      grid.setStyle(style, gridType);
 
       if (styles) {
         styles.set(gridType, style);
@@ -248,10 +242,10 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
    * @return grid type precision
    */
   public getPrecision(zoom: number): GridType | undefined {
+    const grids = this.getGrids(zoom);
     let precision: GridType | undefined;
-    const zoomGrids = this.getGrids(zoom);
-    if (zoomGrids) {
-      precision = zoomGrids.getPrecision();
+    if (grids) {
+      precision = grids.getPrecision();
     }
     return precision;
   }
@@ -263,12 +257,17 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
    *            grid types
    */
   public setGridTypes(types: GridType[]): void {
-    const disableTypes = new Set<GridType>(GridTypeUtils.values());
+    const disableTypes = new Set<string>(Object.keys(GridType));
+
     for (const gridType of types) {
       this.enableByType(gridType);
-      disableTypes.delete(gridType);
+      disableTypes.delete(GridType[gridType]);
     }
-    this.disableTypes(disableTypes);
+    const enums: GridType[] = [];
+    for (const disableType of disableTypes) {
+      enums.push(GridType[disableType as keyof typeof GridType]);
+    }
+    this.disableTypes(enums);
   }
 
   /**
@@ -278,12 +277,16 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
    *            grids
    */
   public setGrids(grids: Grid[]): void {
-    const disableTypes = new Set<GridType>(GridTypeUtils.values());
+    const disableTypes = new Set<string>(Object.keys(GridType));
     for (const grid of grids) {
-      super.enable(grid);
-      disableTypes.delete(grid.getType());
+      this.enable(grid);
+      disableTypes.delete(GridType[grid.getType()]);
     }
-    this.disableTypes(disableTypes);
+    const enums: GridType[] = [];
+    for (const disableType of disableTypes) {
+      enums.push(GridType[disableType as keyof typeof GridType]);
+    }
+    this.disableTypes(enums);
   }
 
   /**
@@ -304,7 +307,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
    * @param types
    *            grid types
    */
-  public disableTypes(types: Set<GridType>): void {
+  public disableTypes(types: GridType[]): void {
     for (const type of types) {
       this.disableByType(type);
     }
@@ -452,7 +455,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
     if (precisionTypes) {
       for (const precisionType of precisionTypes) {
         for (const type of types) {
-          this.getGrid(type)!.setColorWithGridType(precisionType, color);
+          this.getGrid(type)!.setColor(color, precisionType);
         }
       }
     } else {
@@ -476,7 +479,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
     if (precisionTypes) {
       for (const precisionType of precisionTypes) {
         for (const type of types) {
-          this.getGrid(type)!.setWidthWithGridType(width, precisionType);
+          this.getGrid(type)!.setWidth(width, precisionType);
         }
       }
     } else {
@@ -613,7 +616,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
     const labeler = this.getRequiredLabeler(type);
     labeler.setMinZoom(minZoom);
     const maxZoom = labeler.getMaxZoom();
-    if (maxZoom && maxZoom < minZoom) {
+    if (maxZoom !== null && maxZoom !== undefined && maxZoom < minZoom) {
       labeler.setMaxZoom(minZoom);
     }
   }
@@ -629,7 +632,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
   public setLabelMaxZoom(type: GridType, maxZoom: number): void {
     const labeler = this.getRequiredLabeler(type);
     labeler.setMaxZoom(maxZoom);
-    if (maxZoom && labeler.getMinZoom() > maxZoom) {
+    if (maxZoom !== null && maxZoom !== undefined && labeler.getMinZoom() > maxZoom) {
       labeler.setMinZoom(maxZoom);
     }
   }
@@ -646,7 +649,7 @@ export class Grids extends BaseGrids<Grid, ZoomGrids> {
    */
   public setLabelZoomRange(type: GridType, minZoom: number, maxZoom: number): void {
     const labeler = this.getRequiredLabeler(type);
-    if (maxZoom && maxZoom < minZoom) {
+    if (maxZoom !== null && maxZoom !== undefined && maxZoom < minZoom) {
       throw new Error("Min zoom '" + minZoom + "' can not be larger than max zoom '" + maxZoom + "'");
     }
     labeler.setMinZoom(minZoom);

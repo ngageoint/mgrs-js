@@ -3,8 +3,6 @@ import { MGRSUtils } from '../MGRSUtils';
 
 /**
  * Latitude (horizontal) band
- *
- * @author osbornb
  */
 export class LatitudeBand {
   /**

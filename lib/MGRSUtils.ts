@@ -3,9 +3,6 @@ import { MGRSConstants } from './MGRSConstants';
 
 /**
  * Military Grid Reference System utilities
- *
- * @author wnewman
- * @author osbornb
  */
 export class MGRSUtils {
   /**
@@ -35,8 +32,8 @@ export class MGRSUtils {
    */
   public static validateBandLetter(letter: string): void {
     if (
-      letter < MGRSConstants.MIN_BAND_LETTER ||
-      letter > MGRSConstants.MAX_BAND_LETTER ||
+      letter.charCodeAt(0) < MGRSConstants.MIN_BAND_LETTER.charCodeAt(0) ||
+      letter.charCodeAt(0) > MGRSConstants.MAX_BAND_LETTER.charCodeAt(0) ||
       GridUtils.isOmittedBandLetter(letter)
     ) {
       throw new Error('Illegal band letter (CDEFGHJKLMNPQRSTUVWX): ' + letter);

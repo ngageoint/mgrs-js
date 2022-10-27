@@ -1,4 +1,3 @@
-import { Grid } from './Grid';
 import { GridType } from './GridType';
 
 export class GridTypeUtils {
@@ -55,9 +54,10 @@ export class GridTypeUtils {
 
   public static values(): GridType[] {
     const gridTypes: GridType[] = [];
-    for (const type of Object.values(GridType)) {
+    const values = Object.keys(GridType).map((key: any) => GridType[key]);
+    for (const type of values) {
       if (Number.isInteger(type)) {
-        gridTypes.push(type as number);
+        gridTypes.push(type as unknown as number);
       }
     }
     return gridTypes;
@@ -77,5 +77,14 @@ export class GridTypeUtils {
     }
 
     return ordinal;
+  }
+
+  public static hashCode(type: GridType): number {
+    let h: number = 0;
+    const str = type.toString();
+    for (let i = 0; i < str.length; i++) {
+      h = 31 * h + str.charCodeAt(i);
+    }
+    return h & 0xffffffff;
   }
 }

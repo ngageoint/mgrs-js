@@ -4,8 +4,6 @@ import { GridType } from './GridType';
 
 /**
  * Zoom Level Matching Grids
- *
- * @author osbornb
  */
 export class ZoomGrids extends BaseZoomGrids<Grid> {
   /**

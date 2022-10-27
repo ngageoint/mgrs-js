@@ -1,19 +1,18 @@
 import { Color } from '@ngageoint/color-js';
 import { BaseGrid, Bounds, GridStyle, GridTile, PropertyConstants } from '@ngageoint/grid-js';
+import { IComparable } from 'tstl';
 import { GridLine } from '../features/GridLine';
 import { GridZone } from '../gzd/GridZone';
 import { MGRSProperties } from '../property/MGRSProperties';
 import { GridLabel } from './GridLabel';
 import { GridLabeler } from './GridLabeler';
 import { GridType } from './GridType';
+import { GridTypeUtils } from './GridTypeUtils';
 
 /**
  * Grid
- *
- * @author wnewman
- * @author osbornb
  */
-export class Grid extends BaseGrid {
+export class Grid extends BaseGrid implements IComparable<Grid> {
   /**
    * Default line width
    */
@@ -80,14 +79,19 @@ export class Grid extends BaseGrid {
    *            grid type
    * @return grid type line style
    */
-  public getStyleFromGridType(gridType: GridType): GridStyle {
-    let style: GridStyle | undefined;
-    if (gridType === this.type) {
-      style = this.getStyle();
+  public getStyle(gridType?: GridType): GridStyle {
+    let style: GridStyle;
+    if (gridType !== null && gridType !== undefined) {
+      if (gridType === this.type) {
+        style = super.getStyle();
+      } else {
+        style = this.styles.get(gridType)!;
+      }
     } else {
-      style = this.styles.get(gridType);
+      style = super.getStyle();
     }
-    return style!;
+
+    return style;
   }
 
   /**
@@ -98,12 +102,12 @@ export class Grid extends BaseGrid {
    * @return grid type line style
    */
   private getOrCreateStyle(gridType: GridType): GridStyle {
-    let style = this.getStyleFromGridType(gridType);
+    let style = this.getStyle(gridType);
     if (!style) {
       style = new GridStyle(undefined, 0);
-      this.setStyleWithGridType(gridType, style);
+      this.setStyle(style, gridType);
     }
-    return style;
+    return style!;
   }
 
   /**
@@ -114,7 +118,11 @@ export class Grid extends BaseGrid {
    * @param style
    *            grid line style
    */
-  public setStyleWithGridType(gridType: GridType, style: GridStyle): void {
+  public setStyle(style?: GridStyle, gridType?: GridType): void {
+    if (gridType === null || gridType === undefined) {
+      gridType = this.type;
+    }
+
     if (gridType < this.getPrecision()) {
       throw new Error(
         'Grid can not define a style for a higher precision grid type. Type: ' +
@@ -124,9 +132,9 @@ export class Grid extends BaseGrid {
       );
     }
     if (gridType === this.type) {
-      this.setStyle(style);
+      super.setStyle(style);
     } else {
-      this.styles.set(gridType, style != null ? style : new GridStyle(undefined, 0));
+      this.styles.set(gridType, style ? style : new GridStyle(undefined, 0));
     }
   }
 
@@ -144,16 +152,19 @@ export class Grid extends BaseGrid {
    *            grid type
    * @return grid type line color
    */
-  public getColorFromGridType(gridType: GridType): Color {
+  public getColor(gridType?: GridType): Color | undefined {
     let color: Color | undefined;
-    const style = this.getStyleFromGridType(gridType);
-    if (style) {
-      color = style.getColor();
+    if (gridType !== null && gridType !== undefined) {
+      const style = this.getStyle(gridType);
+      if (style) {
+        color = style.getColor();
+      }
     }
     if (!color) {
-      color = this.getColor();
+      color = super.getColor();
     }
-    return color!;
+
+    return color;
   }
 
   /**
@@ -164,7 +175,10 @@ export class Grid extends BaseGrid {
    * @param color
    *            grid line color
    */
-  public setColorWithGridType(gridType: GridType, color: Color): void {
+  public setColor(color?: Color, gridType?: GridType): void {
+    if (gridType === null || gridType === undefined) {
+      gridType = this.type;
+    }
     this.getOrCreateStyle(gridType).setColor(color);
   }
 
@@ -175,14 +189,14 @@ export class Grid extends BaseGrid {
    *            grid type
    * @return grid type line width
    */
-  public getWidthFromGridType(gridType: GridType): number {
+  public getWidth(gridType?: GridType): number {
     let width = 0;
-    const style = this.getStyleFromGridType(gridType);
+    const style = this.getStyle(gridType);
     if (style) {
       width = style.getWidth();
     }
     if (width === 0) {
-      width = this.getWidth();
+      width = super.getWidth();
     }
     return width;
   }
@@ -195,7 +209,10 @@ export class Grid extends BaseGrid {
    * @param width
    *            grid line width
    */
-  public setWidthWithGridType(gridType: GridType, width: number): void {
+  public setWidth(width: number, gridType?: GridType): void {
+    if (gridType === null || gridType === undefined) {
+      gridType = this.type;
+    }
     this.getOrCreateStyle(gridType).setWidth(width);
   }
 
@@ -315,6 +332,13 @@ export class Grid extends BaseGrid {
     return precision;
   }
 
+  public hashCode(): number {
+    const prime = 31;
+    let result = 1;
+    result = prime * result + (!this.type ? 0 : GridTypeUtils.hashCode(this.type));
+    return result;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -325,5 +349,9 @@ export class Grid extends BaseGrid {
     const other = obj as Grid;
     if (this.type !== other.type) return false;
     return true;
+  }
+
+  public less(other: Grid): boolean {
+    return this.hashCode() < other.hashCode();
   }
 }

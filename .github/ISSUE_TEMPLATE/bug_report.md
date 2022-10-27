@@ -11,8 +11,8 @@ Please fill out as much known and relevant information as possible.
 
 #### Version Information:
 
-  * Color Javascript Version:
-  * Color Javascript Source: (e.g. Central Repository, Release, Source Code Build)
+  * MGRS Javascript Version:
+  * MGRS Javascript Source: (e.g. Central Repository, Release, Source Code Build)
   * IDE Name & Version:
   * NPM Version: (npm --version)
   * Node Version: (node --version)

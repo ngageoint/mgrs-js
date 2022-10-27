@@ -9,8 +9,6 @@ import { GridType } from './GridType';
 
 /**
  * MGRS grid labeler
- *
- * @author osbornb
  */
 export class MGRSLabeler extends GridLabeler {
   constructor(enabled: boolean, minZoom = 0, maxZoom?: number, color?: Color, textSize?: number, buffer?: number) {
