@@ -304,6 +304,22 @@ describe('MGRS Tests', function () {
   });
 
   /**
+   * Test points within a few centimeters of a grid line truncate into the
+   * square that contains them. References from GeographicLib GeoConvert.
+   */
+  it('test grid line truncation', function () {
+    const cases: [number, number, string][] = [
+      [63.344656283826, 4.32988630647, '32VKR6639432505'], // northing 7032505.9992
+      [-32.000001, -180, '1HBE1657655629'], // northing 6455629.9796
+      [45.649119337983, -120.001701963978, '10TGR3362559436'], // easting 733625.999997
+      [-80, 2.999999999, '31CDM9999918414'], // easting 499999.99998, 100 km square D not E
+    ];
+    for (const [lat, lon, value] of cases) {
+      expect(MGRS.from(Point.degrees(lon, lat)).coordinate()).to.equal(value);
+    }
+  });
+
+  /**
    * Test parsing GZD coordinates
    *
    * @throws ParseException
