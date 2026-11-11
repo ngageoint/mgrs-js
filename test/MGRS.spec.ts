@@ -337,7 +337,13 @@ describe('MGRS Tests', function () {
    */
   it('test column letter not in zone', function () {
     // zone 1 uses A-H; K belongs to zones 2, 5, ...
-    for (const value of ['01CKM4186716915', '1CKM4186716915', '02CAM4186716915', '03CJM4186716915', '00NAA6602100000']) {
+    for (const value of [
+      '01CKM4186716915',
+      '1CKM4186716915',
+      '02CAM4186716915',
+      '03CJM4186716915',
+      '00NAA6602100000',
+    ]) {
       expect(MGRS.isMGRS(value)).to.be.false;
       expect(() => MGRS.parse(value)).to.throw();
     }
