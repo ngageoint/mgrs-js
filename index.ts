@@ -29,3 +29,4 @@ export * from './lib/gzd/ZoneNumberRange';
 export * from './lib/property/MGRSProperties';
 
 export * from './lib/utm/UTM';
+export * from './lib/ups/UPS';

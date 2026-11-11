@@ -4,6 +4,7 @@ import * as sprintf from 'sprintf-js';
 import { GridTypeUtils } from './grid/GridTypeUtils';
 import { GridZone } from './gzd/GridZone';
 import { UTM } from './utm/UTM';
+import { UPS } from './ups/UPS';
 import { GridZones } from './gzd/GridZones';
 import { MGRSUtils } from './MGRSUtils';
 
@@ -33,6 +34,11 @@ export class MGRS {
    * MGRS invalid string pattern (Svalbard)
    */
   private static readonly mgrsInvalidPattern = new RegExp('^3[246]X.*$', 'i');
+
+  /**
+   * MGRS polar (UPS) string pattern: band A, B, Y or Z with no zone number
+   */
+  private static readonly mgrsPolarPattern = new RegExp('^([ABYZ])(?:([A-HJ-NP-Z][A-HJ-NP-Z])((\\d{2}){0,5}))?$', 'i');
 
   /**
    * Zone number
@@ -197,7 +203,10 @@ export class MGRS {
       type = GridType.METER;
     }
 
-    mgrs += this.zone;
+    if (this.zone !== 0) {
+      // polar (UPS) references have no zone number
+      mgrs += this.zone;
+    }
     mgrs += this.band;
 
     if (type.valueOf() !== GridType.GZD.valueOf()) {
@@ -294,7 +303,19 @@ export class MGRS {
    * @return point
    */
   public toPoint(): Point {
+    if (this.isPolar()) {
+      return UPS.toPoint(this.band, this.column, this.row, this.easting, this.northing);
+    }
     return this.toUTM().toPoint();
+  }
+
+  /**
+   * Check if this is a polar (UPS) coordinate: zone 0 and band A, B, Y or Z
+   *
+   * @return true if polar
+   */
+  public isPolar(): boolean {
+    return this.zone === 0;
   }
 
   /**
@@ -374,6 +395,13 @@ export class MGRS {
    */
   public static isMGRS(mgrs: string): boolean {
     mgrs = MGRS.removeSpaces(mgrs);
+    const polar = mgrs.match(MGRS.mgrsPolarPattern);
+    if (polar) {
+      return (
+        !polar[2] ||
+        UPS.isColumnRow(polar[1].toUpperCase(), polar[2].charAt(0).toUpperCase(), polar[2].charAt(1).toUpperCase())
+      );
+    }
     const matches = mgrs.match(MGRS.mgrsPattern);
     if (!matches || MGRS.mgrsInvalidPattern.test(mgrs)) {
       return false;
@@ -407,6 +435,39 @@ export class MGRS {
   }
 
   /**
+   * Parse a polar (UPS) MGRS string
+   *
+   * @param mgrs
+   *            MGRS string
+   * @param matches
+   *            polar pattern matches
+   * @return MGRS
+   */
+  private static parsePolar(mgrs: string, matches: RegExpMatchArray): MGRS {
+    const band = matches[1].toUpperCase();
+    const columnRow = (matches[2] || '').toUpperCase();
+    if (!columnRow) {
+      // grid zone only: the pole
+      return MGRS.from(Point.degrees(band === 'A' || band === 'Y' ? -1e-9 : 0, band < 'N' ? -90 : 90));
+    }
+    const column = columnRow.charAt(0);
+    const row = columnRow.charAt(1);
+    if (!UPS.isColumnRow(band, column, row)) {
+      throw new Error('Invalid MGRS: ' + mgrs);
+    }
+    let easting = 0;
+    let northing = 0;
+    const location = matches[3];
+    if (location.length > 0) {
+      const precision = location.length / 2;
+      const multiplier = Math.pow(10.0, 5 - precision);
+      easting = +location.substring(0, precision) * multiplier;
+      northing = +location.substring(precision) * multiplier;
+    }
+    return new MGRS(0, band, column, row, easting, northing);
+  }
+
+  /**
    * Removed spaces from the value
    *
    * @param value
@@ -426,6 +487,13 @@ export class MGRS {
    */
   public static from(point: Point): MGRS {
     point = point.toDegrees();
+
+    // north of 84 N and south of 80 S MGRS uses UPS (bands A, B, Y, Z)
+    if (UPS.isPolar(point.getLatitude())) {
+      const latitude = Math.max(-90, Math.min(90, point.getLatitude()));
+      const [upsBand, upsColumn, upsRow, upsEasting, upsNorthing] = UPS.toMGRS(latitude, point.getLongitude());
+      return new MGRS(0, upsBand, upsColumn, upsRow, upsEasting, upsNorthing);
+    }
 
     const utm = UTM.from(point);
 
@@ -452,6 +520,10 @@ export class MGRS {
    *             upon failure to parse the MGRS string
    */
   public static parse(mgrs: string): MGRS {
+    const polar = MGRS.removeSpaces(mgrs).match(MGRS.mgrsPolarPattern);
+    if (polar) {
+      return MGRS.parsePolar(mgrs, polar);
+    }
     if (!MGRS.mgrsPattern.test(MGRS.removeSpaces(mgrs))) {
       throw new Error('Invalid MGRS: ' + mgrs);
     }

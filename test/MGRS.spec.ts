@@ -354,6 +354,42 @@ describe('MGRS Tests', function () {
   });
 
   /**
+   * Test polar (UPS) coordinates north of 84 N and south of 80 S. References
+   * from GeographicLib GeoConvert.
+   */
+  it('test polar', function () {
+    const cases: [number, number, string][] = [
+      [88.389186782401, 149.062244586389, 'ZAJ9194753404'],
+      [-89.626700543677, -178.41905096312, 'AZM9885658570'],
+      [89.960700839522, -65.333389789462, 'YZG9603498179'],
+      [84, 0, 'ZAA0000033272'],
+      [84, -0.0000001, 'YZA9999933272'],
+      [90, 0, 'ZAH0000000000'],
+      [-90, 0, 'BAN0000000000'],
+      [-80.0000001, 0, 'BAZ0000012951'],
+      [85.5, -120, 'YTK6711349926'],
+      [-85.5, 120, 'BGK3288650073'],
+    ];
+    for (const [lat, lon, value] of cases) {
+      const mgrs = MGRS.from(Point.degrees(lon, lat));
+      expect(mgrs.coordinate()).to.equal(value);
+      expect(mgrs.isPolar()).to.be.true;
+      expect(MGRS.isMGRS(value)).to.be.true;
+      const point = MGRS.parse(value).toPoint().toDegrees();
+      expect(point.getLatitude()).to.be.closeTo(lat, 2e-5);
+      if (Math.abs(lat) < 89.99 && (lat > 84.01 || lat < -80.01)) {
+        expect(MGRS.from(point).coordinate()).to.equal(value);
+      }
+    }
+    // 80 S itself is still UTM band C
+    expect(MGRS.from(Point.degrees(0, -80)).coordinate()).to.equal('31CDM4186716915');
+    // letters not used in the band are rejected
+    expect(MGRS.isMGRS('ZRJ9194753404')).to.be.false;
+    expect(() => MGRS.parse('ZRJ9194753404')).to.throw();
+    expect(MGRS.isMGRS('YAG9603498179')).to.be.false;
+  });
+
+  /**
    * Test parsing a Svalbard MGRS string values
    *
    * @throws ParseException
