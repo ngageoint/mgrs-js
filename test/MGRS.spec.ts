@@ -392,6 +392,28 @@ describe('MGRS Tests', function () {
     expect(MGRS.isMGRS('37X')).to.be.true;
     expect(MGRS.parse('37X')).to.not.be.null;
   });
+
+  /**
+   * Test points just north of a band's southern edge decode into that band.
+   * References from GeographicLib GeoConvert. The band bottom northing used
+   * to be evaluated at longitude 0 instead of on this zone's central
+   * meridian, which sent these points one 2,000 km cycle too far north.
+   */
+  it('test band edge northing', function () {
+    const cases: [string, number, number][] = [
+      ['31WEL0000097014', 64.0, 3.0],
+      ['41WNL2005597524', 64.004, 63.4101],
+      ['49WDL8121398731', 64.0149, 110.6157],
+      ['25WDL9754198864', 64.0166, -33.0503],
+    ];
+    for (const [value, lat, lon] of cases) {
+      const point = MGRS.parse(value).toPoint().toDegrees();
+      expect(point.getLatitude()).to.be.closeTo(lat, 1e-4);
+      expect(point.getLongitude()).to.be.closeTo(lon, 1e-4);
+      expect(MGRS.from(Point.degrees(lon, lat)).toPoint().toDegrees().getLatitude()).to.be.closeTo(lat, 1e-4);
+    }
+    expect(MGRS.parse('31WEL0000097014').toUTM().getNorthing()).to.equal(7097014);
+  });
 });
 
 /**
