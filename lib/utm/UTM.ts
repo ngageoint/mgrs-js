@@ -140,12 +140,9 @@ export class UTM {
     const eta = (this.easting - 500000) / (UTM.K0 * k.A);
     const xi = north / (UTM.K0 * k.A);
 
-    let xiPrime = xi;
-    let etaPrime = eta;
-    for (let j = 1; j <= 6; j++) {
-      xiPrime -= k.beta[j] * Math.sin(2 * j * xi) * Math.cosh(2 * j * eta);
-      etaPrime -= k.beta[j] * Math.cos(2 * j * xi) * Math.sinh(2 * j * eta);
-    }
+    const [dXi, dEta] = UTM.kruegerSum(k.beta, xi, eta);
+    const xiPrime = xi - dXi;
+    const etaPrime = eta - dEta;
 
     const sinhEtaPrime = Math.sinh(etaPrime);
     const sinXiPrime = Math.sin(xiPrime);
@@ -153,7 +150,7 @@ export class UTM {
     const tauPrime = sinXiPrime / Math.sqrt(sinhEtaPrime * sinhEtaPrime + cosXiPrime * cosXiPrime);
 
     // Newton iteration for tau = tan(latitude)
-    let tau = tauPrime;
+    let tau = tauPrime / (1 - k.e * k.e);
     for (let i = 0; i < 10; i++) {
       const tauIPrime = UTM.conformalTau(tau, k.e);
       const delta =
@@ -284,12 +281,9 @@ export class UTM {
     const xiPrime = Math.atan2(tauPrime, cosLambda);
     const etaPrime = Math.asinh(Math.sin(lam) / Math.sqrt(tauPrime * tauPrime + cosLambda * cosLambda));
 
-    let xi = xiPrime;
-    let eta = etaPrime;
-    for (let j = 1; j <= 6; j++) {
-      xi += k.alpha[j] * Math.sin(2 * j * xiPrime) * Math.cosh(2 * j * etaPrime);
-      eta += k.alpha[j] * Math.cos(2 * j * xiPrime) * Math.sinh(2 * j * etaPrime);
-    }
+    const [dXi, dEta] = UTM.kruegerSum(k.alpha, xiPrime, etaPrime);
+    const xi = xiPrime + dXi;
+    const eta = etaPrime + dEta;
 
     const easting = UTM.K0 * k.A * eta + 500000;
     let northing = UTM.K0 * k.A * xi;
@@ -364,6 +358,45 @@ export class UTM {
       };
     }
     return UTM.kruegerCoefficients;
+  }
+
+  /**
+   * Sum of c[j] sin(2 j zeta) for j = 1..6, zeta = xi + i eta, by Clenshaw
+   * summation (Karney 2011, section 8), so only one sin, cos, sinh and cosh
+   * are evaluated
+   *
+   * @param c
+   *            coefficients (one based)
+   * @param xi
+   *            real part
+   * @param eta
+   *            imaginary part
+   * @return [sum of c[j] sin(2 j xi) cosh(2 j eta), sum of c[j] cos(2 j xi) sinh(2 j eta)]
+   */
+  private static kruegerSum(c: number[], xi: number, eta: number): [number, number] {
+    const sin2 = Math.sin(2 * xi);
+    const cos2 = Math.cos(2 * xi);
+    const sinh2 = Math.sinh(2 * eta);
+    const cosh2 = Math.cosh(2 * eta);
+    // a = 2 cos(2 zeta)
+    const ar = 2 * cos2 * cosh2;
+    const ai = -2 * sin2 * sinh2;
+    let y1r = 0;
+    let y1i = 0;
+    let y2r = 0;
+    let y2i = 0;
+    for (let j = c.length - 1; j >= 1; j--) {
+      const y0r = ar * y1r - ai * y1i - y2r + c[j];
+      const y0i = ar * y1i + ai * y1r - y2i;
+      y2r = y1r;
+      y2i = y1i;
+      y1r = y0r;
+      y1i = y0i;
+    }
+    // sum = y1 sin(2 zeta)
+    const sr = sin2 * cosh2;
+    const si = cos2 * sinh2;
+    return [y1r * sr - y1i * si, y1r * si + y1i * sr];
   }
 
   /**
