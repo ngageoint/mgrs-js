@@ -70,6 +70,7 @@ See [mgrs-android](https://github.com/ngageoint/mgrs-android) for a concrete exa
       for (const zone of gridRange) {
         const lines = grid.getLinesFromGridTile(tile, zone);
         if (lines) {
+          // Lines extend past the zone bounds: clip the drawing to the zone's pixel range
           const pixelRange = zone.getBounds().getPixelRangeFromTile(tile);
           for (const line of lines) {
             const pixel1 = line.getPoint1().getPixelFromTile(tile);
