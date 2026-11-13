@@ -183,25 +183,29 @@ export class GridZone {
           ) {
             const northingPrecision = GridTypeUtils.getPrecision(northing);
 
-            let southwest = UTM.point(zoneNumber, hemisphere, easting, northing);
+            const southwest = UTM.point(zoneNumber, hemisphere, easting, northing);
             const northwest = UTM.point(zoneNumber, hemisphere, easting, northing + precision);
-            let southeast = UTM.point(zoneNumber, hemisphere, easting + precision, northing);
-
-            // For points outside the tile grid longitude bounds,
-            // get a bound just outside the bounds
-            if (precision > 1) {
-              if (southwest.getLongitude() < minLon) {
-                southwest = this.getWestBoundsPoint(easting, northing, southwest, southeast);
-              } else if (southeast.getLongitude() > maxLon) {
-                southeast = this.getEastBoundsPoint(easting, northing, southwest, southeast);
-              }
-            }
+            const southeast = UTM.point(zoneNumber, hemisphere, easting + precision, northing);
 
             // Vertical line
             lines.push(GridLine.lineFromPoints(southwest, northwest, eastingPrecision));
 
+            // For points outside the tile grid longitude bounds,
+            // get a bound just outside the bounds. Only the horizontal
+            // line ends there: moving the vertical line's southwest point
+            // would turn it into a diagonal to the northwest point.
+            let west = southwest;
+            let east = southeast;
+            if (precision > 1) {
+              if (southwest.getLongitude() < minLon) {
+                west = this.getWestBoundsPoint(easting, northing, southwest, southeast);
+              } else if (southeast.getLongitude() > maxLon) {
+                east = this.getEastBoundsPoint(easting, northing, southwest, southeast);
+              }
+            }
+
             // Horizontal line
-            lines.push(GridLine.lineFromPoints(southwest, southeast, northingPrecision));
+            lines.push(GridLine.lineFromPoints(west, east, northingPrecision));
           }
         }
       }
