@@ -29,4 +29,26 @@ describe('UTM Tests', function () {
 
     expect(utm.toString() === parsed.toString()).to.be.true;
   });
+
+  /**
+   * Compare with GeographicLib GeoConvert (exact to a few nanometers)
+   */
+  it('test accuracy', function () {
+    const cases: [number, number, number, Hemisphere, number, number][] = [
+      [63.344656283826, 4.32988630647, 32, Hemisphere.NORTH, 266394.732062, 7032505.999214],
+      [-32.000001, -180, 1, Hemisphere.SOUTH, 216576.776555, 6455629.979552],
+      [45.649119337983, -120.001701963978, 10, Hemisphere.NORTH, 733625.999997, 5059436.556351],
+    ];
+    for (const [lat, lon, zone, hemisphere, easting, northing] of cases) {
+      const utm = UTM.from(Point.degrees(lon, lat));
+      expect(utm.getZone()).to.equal(zone);
+      expect(utm.getHemisphere()).to.equal(hemisphere);
+      expect(utm.getEasting()).to.be.closeTo(easting, 2e-6);
+      expect(utm.getNorthing()).to.be.closeTo(northing, 2e-6);
+
+      const point = UTM.create(zone, hemisphere, easting, northing).toPoint().toDegrees();
+      expect(point.getLatitude()).to.be.closeTo(lat, 1e-10);
+      expect(point.getLongitude()).to.be.closeTo(lon, 1e-10);
+    }
+  });
 });
