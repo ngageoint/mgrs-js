@@ -385,7 +385,36 @@ export class MGRS {
    */
   public static isMGRS(mgrs: string): boolean {
     mgrs = MGRS.removeSpaces(mgrs);
-    return MGRS.mgrsPattern.test(mgrs) && !MGRS.mgrsInvalidPattern.test(mgrs);
+    const matches = mgrs.match(MGRS.mgrsPattern);
+    if (!matches || MGRS.mgrsInvalidPattern.test(mgrs)) {
+      return false;
+    }
+    const columnRow = matches[3];
+    if (!columnRow) {
+      return true;
+    }
+    const zone = Number.parseInt(matches[1], 10);
+    return MGRS.isColumnRow(zone, columnRow.charAt(0).toUpperCase(), columnRow.charAt(1).toUpperCase());
+  }
+
+  /**
+   * Check the 100km column and row letters are used in the zone
+   *
+   * @param zone
+   *            zone number
+   * @param column
+   *            column letter
+   * @param row
+   *            row letter
+   * @return true if both letters are used in the zone
+   */
+  private static isColumnRow(zone: number, column: string, row: string): boolean {
+    return (
+      zone >= 1 &&
+      zone <= 60 &&
+      MGRS.getColumnLetters(zone).indexOf(column) >= 0 &&
+      MGRS.getRowLetters(zone).indexOf(row) >= 0
+    );
   }
 
   /**
@@ -455,6 +484,12 @@ export class MGRS {
       columnRow = columnRow.toUpperCase();
       const column = columnRow.charAt(0);
       const row = columnRow.charAt(1);
+
+      // each zone uses 8 of the 24 column letters; a letter from another
+      // zone used to decode to a point outside the zone (or past -180)
+      if (!MGRS.isColumnRow(zone, column, row)) {
+        throw new Error('Invalid MGRS: ' + mgrs);
+      }
 
       // parse easting & northing
       let easting = 0;
