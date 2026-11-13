@@ -343,8 +343,19 @@ export class MGRS {
     // bottommost 100km square
     // (100km square boundaries are aligned with 100km UTM northing
     // intervals)
-
-    const latBandNorthing = UTM.from(Point.degrees(0, latBand)).getNorthing();
+    //
+    // The bottom parallel of the band is lowest on the central meridian of
+    // this zone in the northern hemisphere and at the zone edge in the
+    // southern hemisphere, so take the smaller of the two, both in this
+    // zone. (Evaluating it at longitude 0, i.e. 3 degrees off the central
+    // meridian of zone 31, gave a value up to ~3.5 km too large in the north
+    // and sent points just north of a band edge one 2,000 km cycle too far.)
+    const hemisphere = this.getHemisphere();
+    const centralMeridian = this.zone * 6 - 183;
+    const latBandNorthing = Math.min(
+      UTM.from(Point.degrees(centralMeridian, latBand), this.zone, hemisphere).getNorthing(),
+      UTM.from(Point.degrees(centralMeridian + 3, latBand), this.zone, hemisphere).getNorthing(),
+    );
     const nBand = Math.floor(latBandNorthing / 100000) * 100000;
 
     // 100km grid square row letters repeat every 2,000km north; add enough
